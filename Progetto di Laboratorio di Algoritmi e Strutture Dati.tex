@@ -1,0 +1,187 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[italian]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}	% Set document margins
+\usepackage{amsmath}
+\usepackage[hidelinks]{hyperref}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{textcomp}	% For single quotes in codes
+
+\usepackage{pgfplots}
+
+
+\title{\textbf{Laboratorio di Algoritmi e Strutture Dati 2020/2021} --- Prima parte}
+\date{\today}
+\author{\href{mailto:bonaccorsi.mattia@spes.uniud.it}{Mattia Bonaccorsi}, \href{mailto:stefanel.enrico@spes.uniud.it}{Enrico Stefanel}, \href{mailto:torchanyn.andriy@spes.uniud.it}{Andriy Torchanyn}}
+
+\usepackage{listings} 
+\usepackage{setspace} 
+
+
+\definecolor{halfgray}{gray}{0.55}
+\definecolor{snow}{RGB}{250, 250, 250}
+\definecolor{green}{RGB}{0, 128, 0}
+\definecolor{cyan}{RGB}{64, 128, 128}
+
+\lstdefinelanguage{python}{
+morekeywords={and,break,def,elif,else,for,from,global,if,import,as,in,is,lambda,not,or,pass,print,return,try,while}, morekeywords=[2]{abs,all,any,bool,chr,dict,dir,divmod,enumerate,eval,file,filter,float,format,globals,help,id,input,int,len,list,locals,long,map,min,next,pow,range,input,round,set,str,sum,super,tuple,type,unichr,unicode,vars}, keywordstyle=\color{green},
+    morecomment=[l]\#, commentstyle=\color{cyan},
+    frame=single, framexleftmargin=2em, backgroundcolor=\color{snow},
+    numbers=left, numberstyle=\footnotesize\color{halfgray}\ttfamily, xleftmargin=1.5em, basicstyle=\ttfamily\small,
+    upquote=true
+}
+
+
+
+\begin{document}
+
+\maketitle
+
+\section{Il perido frazionario}
+\textbf{Definizione} Il \textit{periodo frazionario minimo} di una stringa $s$ è il più piccolo intero $p>0$ che soddisfa la seguente
+proprietà:
+\begin{equation}
+s(i) = s(i+p)\qquad \forall i = 1, \dots , (n-p) \tag{$\star$}
+\end{equation}
+
+dove $n$ denota la lunghezza e $s(k)$ è il $k$-esimo carattere della stringa $s$.\\
+\\
+\textbf{Esempio} Il \emph{periodo frazionario minimo} della stringa \texttt{abcabcab} è 3, mentre il \emph{periodo frazionario minimo} della stringa \texttt{aba} è 2.\\
+\\
+Si implementano di seguito due algoritmi scritti in linguaggio Python3 per il calcolo del \emph{periodo frazionario minimo} di una qualsiasi stringa.\\
+In particolare, l'algoritmo \textit{PeriodNa{\"i}ve} con complessità $\Theta(n^2)$, e l'algoritmo \textit{PeriodSmart} con complessità $\Theta(n)$.
+
+
+
+\section{Algoritmo \textit{PeriodNa{\"i}ve}}
+
+\subsection{Descrizione dell'algoritmo}
+L'algoritmo utilizza un ciclo \texttt{for}  con un intero $p$ che varia da 1 a $n$ e termina restituendo $p$ alla prima iterazione che soddisfa la proprietà ($\star$). Quest'ultima viene verificata confrontando la congruenza tra il prefisso della stringa $s$ fino alla posizione $n-p$, e il suffisso dalla posizione $p$ fino al termine della stringa. Nel caso in cui queste parti combacino, la dimensione $p$ è esattamente il \textit{periodo frazionario minimo} cercato.\\
+Nel caso dell'inserimento in input della stringa vuota, l'algoritmo restituirà il risultato di errore \texttt{-1} in quanto $n$ varrà 0 e quindi il codice all'interno del ciclo \texttt{for} non verrà mai eseguito.
+
+\subsection{Codice dell'algoritmo}  
+\lstinputlisting[language=Python,firstline=1,lastline=16]{sources/PeriodNaive.py} 
+
+\subsection{Osservazioni sul codice}
+
+Alternativamente al controllo della congruenza tra il prefisso $[1 \dots n-p]$ e suffisso $[p \dots n]$, la funzione \textit{isPeriod} potrebbe venire implementata anche con un ciclo secondario per il controllo dell'uguaglianza tra $s(j)$ e $s(j+p)$, con $j$ che varia da $1$ a $n-p$.\\
+Tale implementazione sarebbe stata scritta così:
+\lstinputlisting[language=Python,firstline=20,lastline=27]{sources/PeriodNaive.py} 
+Il motivo per cui non è stata scelta questa implementazione è che nel caso di un generico input $s$, il ciclo interno si sarebbe fermato alla prima disuguaglianza trovata. Questo avrebbe di certo ottimizzato l'algoritmo in pratica, ma avrebbe reso più difficile un confronto generale tra questo algoritmo e la versione \textit{smart} illustrata di seguito, che ha un andamento lineare sulla dimensione dell'input.
+
+
+\section{Algoritmo \textit{PeriodSmart}}
+
+\subsection{Descrizione dell'algoritmo}
+\textbf{Definizione} Un \textit{bordo} di una stringa $s$ è una qualunque stringa $t$ che sia, allo stesso tempo, prefisso proprio di $s$ e suffisso proprio di $s$.\\
+\\
+Si osserva che $p$ è un periodo frazionario di $s$ se e solo se $s = |p|-r$, dove $r$ è la lunghezza di un bordo di $s$. Ciò permette di ridurre il problema del calcolo del periodo frazionario minimo di $s$ al problema del calcolo della lunghezza massima di un bordo di $s$.\\ 
+\\
+Per risolvere quest'ultimo problema si procede per induzione, calcolando per ogni prefisso $s[1,\dots,i]$, dal più corto al più lungo, la lunghezza $r(i)$ del bordo massimo di $s[1,\dots,i]$.\\
+Per implementare il passo induttivo da $i$ a $i+1$ si consideri la sequenza
+\begin{equation*}
+r(i)>r(r(i))>r(r(r(i)))>\dots>r^{k}(i)=0
+\end{equation*}
+e si osserva che nel calcolo di $r(i+1)$ solamente i due casi seguenti possono darsi:
+\begin{itemize}
+\item per qualche indice $j \leq k$ vale l'uguaglianza $s[i+1] = s[r^{j}(i)+1]$. In tal caso, $r(i+1) = r^{j}(i)+1$ dove $j$ è il primo indice per cui vale la suddetta uguaglianza;
+\item non esiste alcun indice $j \leq k$ che soddisfi l'uguaglianza $s[i+1] = s[r^{j}(i)+1]$. In tal caso, $r(i+1) = 0$.
+\end{itemize}
+
+\subsection{Codice dell'algoritmo}
+\lstinputlisting[language=Python]{sources/PeriodSmart.py} 
+
+
+
+\section{Calcolo dei tempi di esecuzione dei due algoritmi}
+Si vogliono misurare i tempi medi di esecuzione dei due algoritmi \hyperlink{section.2}{\textit{PeriodNa{\"i}ve}} e \hyperlink{section.3}{\textit{PeriodSmart}} al variare della lunghezza $n$ della stringa fornita in input.\\
+
+\subsection{Calcolo della precisione del sistema}
+La precisione della misurazione sperimentale è data dal più piccolo intervallo di tempo che il nostro computer può misurare.\\
+Possiamo stimare la risoluzione del \textit{clock} di sistema utilizzando un ciclo \texttt{while} per calcolare l'intervallo minimo di tempo misurabile.\\
+Successivamente si calcola il \textit{tempo minimo ammissibile} in funzione della risoluzione stimata e dell'errore relativo ammissibile (pari, nel nostro caso, a $0.001$).
+\lstinputlisting[language=Python,firstline=8,lastline=20]{sources/Complexity.py}
+\begin{lstlisting}[language=Python]
+print(t_min)
+0.0009546279907226562
+\end{lstlisting}
+
+Il \textit{tempo minimo ammissibile}, nel calcolatore utilizzato, è di \texttt{0.0009546279907226562} secondi.
+
+\subsection{Generazione dell'\textit{array} delle dimensioni degli input}
+Si definisce un \textit{array} \texttt{sizes} di lunghezze $n$ dell'input con distribuzione esponenziale per ottenere un buon compromesso in termini di efficienza e di completezza dello studio. Tale \textit{array} viene definito come l'insieme di tutti i valori  $ \bigl\lfloor A \cdot B^i \bigl\rfloor $ , con $ 0 \leq i <  100 $ e $A,B$ calcolati opportunamente in modo da avere $n=1000$ quando $i=0$, e $n=500000$ quando $i=99$.
+\begin{gather*}
+\bigl\lfloor A \cdot B^i \bigl\rfloor = 1000 \quad \text{se} \quad i = 0 \qquad \Rightarrow \qquad \bigl\lfloor A \cdot 1 \bigl\rfloor = 1000 \qquad \Rightarrow \qquad A = 1000\\
+\bigl\lfloor 1000 \cdot B^i \bigl\rfloor = 500000 \quad \text{se} \quad i = 99 \qquad \Rightarrow \qquad \bigl\lfloor B^{99} \bigl\rfloor = 500 \qquad \Rightarrow \qquad B = \sqrt[99]{500}
+\end{gather*}
+\lstinputlisting[language=Python,firstline=24,lastline=35]{sources/Complexity.py}
+
+\subsection{Generazione dell'\textit{array} degli input}
+La stringa $s$ di lunghezza $n$ viene generata su un alfabeto ternario \texttt{\{a,b,c\}} in modo che ogni lettera $s(i)$ della stringa sia generata in modo pseudo-casuale indipendentemente dalle altre.
+\lstinputlisting[language=Python,firstline=40,lastline=46]{sources/Complexity.py}
+
+\subsection{Calcolo del tempo medio}
+Vengono salvati in due array \texttt{growth\_PN} e \texttt{growth\_PS} rispettivamente i tempi di esecuzione dell'algoritmo \hyperlink{section.2}{\textit{PeriodNa{\"i}ve}} e \hyperlink{section.3}{\textit{PeriodSmart}} al variare della lunghezza $n$ della stringa fornita in input, seguendo la distribuzione indicata dall'array \texttt{strings} calcolata \hyperlink{subsection.4.3}{in precedenza}.
+\lstinputlisting[language=Python,firstline=49,lastline=65]{sources/Complexity.py}
+Visualizzando i risultati dei tempi di esecuzione con le rispettive lunghezze dell'input, si ottiene il grafico sotto.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.75]
+\pgfplotsset{
+    width=\textwidth,
+}
+\begin{axis}[
+	title={Tempi di esecuzione in relazione alla dimensione dell'input},
+    axis line style={->},
+    xlabel={\small Dimensione dell'input (\textit{caratteri})},
+    ylabel={\small Tempo (\textit{sec})},
+	xtick distance=50000,
+	grid,
+	grid style={dotted,gray},
+	axis x line=bottom,
+    axis y line=left,
+    legend style={ at={(0.95,0.05)}, anchor=south east},
+    %width=1.25\textwidth,
+    %height=\textwidth
+	]
+\addplot[mark=*, blue] table [x=size, y=time_PN, col sep=comma]{sources/results.csv};
+\addplot[mark=*, orange] table [x=size, y=time_PS, col sep=comma]{sources/results.csv};
+\addlegendentry{Algoritmo \textit{PeriodNa{\"i}ve}}
+\addlegendentry{Algoritmo \textit{PeriodSmart}}
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+Per poter apprezzare meglio le misurazioni, è possibile visualizzare il grafico con scala logaritmica su entrambi gli assi.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.75]
+\pgfplotsset{
+    width=\textwidth,
+}
+\begin{axis}[
+	xmode=log,
+	ymode=log,
+	title={Tempi di esecuzione in relazione alla dimensione dell'input},
+	xlabel={\small Dimensione dell'input (\textit{caratteri})},
+    ylabel={\small Tempo (\textit{sec})},
+    legend style={ at={(0.95,0.05)}, anchor=south east},
+	grid,
+	grid style={dotted,gray},
+	axis x line=bottom,
+    axis y line=left,
+    %width=1.25\textwidth,
+    %height=\textwidth
+]
+\addplot[mark=*, blue] table [x=size, y=time_PN, col sep=comma]{sources/results.csv};
+\addplot[mark=*, orange] table [x=size, y=time_PS, col sep=comma]{sources/results.csv};
+\addlegendentry{Algoritmo \textit{PeriodNa{\"i}ve}}
+\addlegendentry{Algoritmo \textit{PeriodSmart}}
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+
+\end{document}
