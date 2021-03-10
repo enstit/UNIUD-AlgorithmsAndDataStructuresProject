@@ -59,7 +59,7 @@ In particolare, l'algoritmo \textit{PeriodNa{\"i}ve} con complessità $\Theta(n^
 
 \subsection{Descrizione dell'algoritmo}
 L'algoritmo utilizza un ciclo \texttt{for}  con un intero $p$ che varia da 1 a $n$ e termina restituendo $p$ alla prima iterazione che soddisfa la proprietà ($\star$). Quest'ultima viene verificata confrontando la congruenza tra il prefisso della stringa $s$ fino alla posizione $n-p$, e il suffisso dalla posizione $p$ fino al termine della stringa. Nel caso in cui queste parti combacino, la dimensione $p$ è esattamente il \textit{periodo frazionario minimo} cercato.\\
-Nel caso dell'inserimento in input della stringa vuota, l'algoritmo restituirà il risultato di errore \texttt{-1} in quanto $n$ varrà 0 e quindi il codice all'interno del ciclo \texttt{for} non verrà mai eseguito.
+Nel caso dell'inserimento in input della stringa vuota, l'algoritmo restituirà il risultato di errore ``\texttt{-1}'' in quanto $n$ varrà 0 e quindi il codice all'interno del ciclo \texttt{for} non verrà mai eseguito.
 
 \subsection{Codice dell'algoritmo}  
 \lstinputlisting[language=Python,firstline=1,lastline=16]{sources/PeriodNaive.py} 
