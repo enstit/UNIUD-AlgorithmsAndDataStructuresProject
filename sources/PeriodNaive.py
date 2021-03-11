@@ -10,10 +10,7 @@ def PeriodNaive(s):
 # False otherwhise.
 def _isPeriod(s,p):
     n = len(s)
-    if(s[:n-p] == s[p:]):
-        return True
-    else:
-        return False
+    return (s[:n-p] == s[p:])
      
 ##############################
 

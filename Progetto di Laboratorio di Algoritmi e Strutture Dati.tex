@@ -62,13 +62,13 @@ L'algoritmo utilizza un ciclo \texttt{for}  con un intero $p$ che varia da 1 a $
 Nel caso dell'inserimento in input della stringa vuota, l'algoritmo restituirà il risultato di errore ``\texttt{-1}'' in quanto $n$ varrà 0 e quindi il codice all'interno del ciclo \texttt{for} non verrà mai eseguito.
 
 \subsection{Codice dell'algoritmo}  
-\lstinputlisting[language=Python,firstline=1,lastline=16]{sources/PeriodNaive.py} 
+\lstinputlisting[language=Python,firstline=1,lastline=13]{sources/PeriodNaive.py} 
 
 \subsection{Osservazioni sul codice}
 
 Alternativamente al controllo della congruenza tra il prefisso $[1 \dots n-p]$ e suffisso $[p \dots n]$, la funzione \textit{isPeriod} potrebbe venire implementata anche con un ciclo secondario per il controllo dell'uguaglianza tra $s(j)$ e $s(j+p)$, con $j$ che varia da $1$ a $n-p$.\\
 Tale implementazione sarebbe stata scritta così:
-\lstinputlisting[language=Python,firstline=20,lastline=27]{sources/PeriodNaive.py} 
+\lstinputlisting[language=Python,firstline=17,lastline=24]{sources/PeriodNaive.py} 
 Il motivo per cui non è stata scelta questa implementazione è che nel caso di un generico input $s$, il ciclo interno si sarebbe fermato alla prima disuguaglianza trovata. Questo avrebbe di certo ottimizzato l'algoritmo in pratica, ma avrebbe reso più difficile un confronto generale tra questo algoritmo e la versione \textit{smart} illustrata di seguito, che ha un andamento lineare sulla dimensione dell'input.
 
 
@@ -111,12 +111,32 @@ print(t_min)
 Il \textit{tempo minimo ammissibile}, nel calcolatore utilizzato, è di \texttt{0.0009546279907226562} secondi.
 
 \subsection{Generazione dell'\textit{array} delle dimensioni degli input}
-Si definisce un \textit{array} \texttt{sizes} di lunghezze $n$ dell'input con distribuzione esponenziale per ottenere un buon compromesso in termini di efficienza e di completezza dello studio. Tale \textit{array} viene definito come l'insieme di tutti i valori  $ \bigl\lfloor A \cdot B^i \bigl\rfloor $ , con $ 0 \leq i <  100 $ e $A,B$ calcolati opportunamente in modo da avere $n=1000$ quando $i=0$, e $n=500000$ quando $i=99$.
+Si definisce un \textit{array} \texttt{sizes} di lunghezze $n$ dell'input con distribuzione esponenziale per ottenere un buon compromesso in termini di efficienza e di completezza dello studio. Tale \textit{array} viene definito come l'insieme di tutti i valori  $ \bigl\lfloor A \cdot B^i \bigl\rfloor $ , con $ 0 \leq i <  100 $ e $A, B$ calcolati opportunamente in modo da avere $n = 1000$ quando $i = 0$, e $n = 500000$ quando $i = 99$.
 \begin{gather*}
 \bigl\lfloor A \cdot B^i \bigl\rfloor = 1000 \quad \text{se} \quad i = 0 \qquad \Rightarrow \qquad \bigl\lfloor A \cdot 1 \bigl\rfloor = 1000 \qquad \Rightarrow \qquad A = 1000\\
 \bigl\lfloor 1000 \cdot B^i \bigl\rfloor = 500000 \quad \text{se} \quad i = 99 \qquad \Rightarrow \qquad \bigl\lfloor B^{99} \bigl\rfloor = 500 \qquad \Rightarrow \qquad B = \sqrt[99]{500}
 \end{gather*}
 \lstinputlisting[language=Python,firstline=24,lastline=35]{sources/Complexity.py}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.7]
+\pgfplotsset{
+    width=1.25\textwidth,
+    height=0.95\textwidth
+}
+\begin{axis}[
+	title={Dimensione degli input},
+    xlabel={\small ID dell'input},
+    ylabel={\small Dimensione dell'input (\textit{caratteri})},
+	grid,
+	grid style={dotted,gray},
+	axis x line=bottom,
+    axis y line=left,
+]
+\addplot[mark=*, green] table [x=id, y=size, col sep=comma]{sources/results.csv};
+\end{axis}
+\end{tikzpicture}
+\end{center}
 
 \subsection{Generazione dell'\textit{array} degli input}
 La stringa $s$ di lunghezza $n$ viene generata su un alfabeto ternario \texttt{\{a,b,c\}} in modo che ogni lettera $s(i)$ della stringa sia generata in modo pseudo-casuale indipendentemente dalle altre.
@@ -130,7 +150,8 @@ Visualizzando i risultati dei tempi di esecuzione con le rispettive lunghezze de
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \pgfplotsset{
-    width=\textwidth,
+    width=1.25\textwidth,
+    height=0.95\textwidth
 }
 \begin{axis}[
 	title={Tempi di esecuzione in relazione alla dimensione dell'input},
@@ -143,8 +164,6 @@ Visualizzando i risultati dei tempi di esecuzione con le rispettive lunghezze de
 	axis x line=bottom,
     axis y line=left,
     legend style={ at={(0.95,0.05)}, anchor=south east},
-    %width=1.25\textwidth,
-    %height=\textwidth
 	]
 \addplot[mark=*, blue] table [x=size, y=time_PN, col sep=comma]{sources/results.csv};
 \addplot[mark=*, orange] table [x=size, y=time_PS, col sep=comma]{sources/results.csv};
@@ -154,12 +173,11 @@ Visualizzando i risultati dei tempi di esecuzione con le rispettive lunghezze de
 \end{tikzpicture}
 \end{center}
 
-Per poter apprezzare meglio le misurazioni, è possibile visualizzare il grafico con scala logaritmica su entrambi gli assi.
-
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \pgfplotsset{
-    width=\textwidth,
+    width=1.25\textwidth,
+    height=0.95\textwidth
 }
 \begin{axis}[
 	xmode=log,
@@ -172,8 +190,6 @@ Per poter apprezzare meglio le misurazioni, è possibile visualizzare il grafico
 	grid style={dotted,gray},
 	axis x line=bottom,
     axis y line=left,
-    %width=1.25\textwidth,
-    %height=\textwidth
 ]
 \addplot[mark=*, blue] table [x=size, y=time_PN, col sep=comma]{sources/results.csv};
 \addplot[mark=*, orange] table [x=size, y=time_PS, col sep=comma]{sources/results.csv};

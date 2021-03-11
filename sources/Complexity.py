@@ -76,9 +76,9 @@ for s in strings:
 
 import csv
 
-row_list = [['size', 'time_PN', 'time_PS']]
+row_list = [['id', 'size', 'time_PN', 'time_PS']]
 for i in range(RANGE):
-    row_list.append([sizes[i], growth_PN[i], growth_PS[i]])
+    row_list.append([i, sizes[i], growth_PN[i], growth_PS[i]])
 
 with open('results.csv', 'w', newline='') as file:
     writer = csv.writer(file)
