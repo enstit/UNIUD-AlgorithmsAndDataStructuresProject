@@ -46,23 +46,31 @@ for size in sizes:
 
 ############################################################
 
-# Create an array with timings from PeriodNaive function
-# with input from strings array
+# Create an array with average timings from PeriodNaive
 growth_PN = []
 for s in strings:
-    start = t.time()
-    PeriodNaive(s)
-    end = t.time()
-    growth_PN.append(end-start)
+    i = 0
+    t_passed = 0
+    while ( t_passed <= t_min ):
+        start = t.time()
+        PeriodNaive(s)
+        end = t.time()
+        i += 1
+        t_passed += end-start
+    growth_PN.append(t_passed/i)
 
-# Create an array with timings from PeriodSmart function
-# with input from strings array
+# Create an array with average timings from PeriodSmart
 growth_PS = []
 for s in strings:
-    start = t.time()
-    PeriodSmart(s)
-    end = t.time()
-    growth_PS.append(end-start)
+    i = 0
+    t_passed = 0
+    while ( t_passed <= t_min ):
+        start = t.time()
+        PeriodSmart(s)
+        end = t.time()
+        i += 1
+        t_passed += end-start
+    growth_PS.append(t_passed/i)
 
 ############################################################
 

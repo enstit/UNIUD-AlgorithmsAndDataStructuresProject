@@ -14,7 +14,7 @@
 
 \title{\textbf{Laboratorio di Algoritmi e Strutture Dati 2020/2021} --- Prima parte}
 \date{\today}
-\author{\href{mailto:bonaccorsi.mattia@spes.uniud.it}{Mattia Bonaccorsi}, \href{mailto:stefanel.enrico@spes.uniud.it}{Enrico Stefanel}, \href{mailto:torchanyn.andriy@spes.uniud.it}{Andriy Torchanyn}}
+\author{\href{mailto:bonaccorsi.mattia@spes.uniud.it}{Mattia Bonaccorsi}, \href{mailto:kouate.muhamed@spes.uniud.it}{Muhamed Kouate}, \href{mailto:stefanel.enrico@spes.uniud.it}{Enrico Stefanel}, \href{mailto:torchanyn.andriy@spes.uniud.it}{Andriy Torchanyn}}
 
 \usepackage{listings} 
 \usepackage{setspace} 
@@ -124,11 +124,11 @@ La stringa $s$ di lunghezza $n$ viene generata su un alfabeto ternario \texttt{\
 
 \subsection{Calcolo del tempo medio}
 Vengono salvati in due array \texttt{growth\_PN} e \texttt{growth\_PS} rispettivamente i tempi di esecuzione dell'algoritmo \hyperlink{section.2}{\textit{PeriodNa{\"i}ve}} e \hyperlink{section.3}{\textit{PeriodSmart}} al variare della lunghezza $n$ della stringa fornita in input, seguendo la distribuzione indicata dall'array \texttt{strings} calcolata \hyperlink{subsection.4.3}{in precedenza}.
-\lstinputlisting[language=Python,firstline=49,lastline=65]{sources/Complexity.py}
+\lstinputlisting[language=Python,firstline=49,lastline=73]{sources/Complexity.py}
 Visualizzando i risultati dei tempi di esecuzione con le rispettive lunghezze dell'input, si ottiene il grafico sotto.
 
 \begin{center}
-\begin{tikzpicture}[scale=0.75]
+\begin{tikzpicture}[scale=0.7]
 \pgfplotsset{
     width=\textwidth,
 }
@@ -157,7 +157,7 @@ Visualizzando i risultati dei tempi di esecuzione con le rispettive lunghezze de
 Per poter apprezzare meglio le misurazioni, è possibile visualizzare il grafico con scala logaritmica su entrambi gli assi.
 
 \begin{center}
-\begin{tikzpicture}[scale=0.75]
+\begin{tikzpicture}[scale=0.7]
 \pgfplotsset{
     width=\textwidth,
 }
