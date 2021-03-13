@@ -36,13 +36,30 @@ for i in range(RANGE):
 
 ############################################################
 
-# Create an array with random strings
-# with individual lengths from sizes array
-strings = []
-for size in sizes:
-    strings.append(''.join(
-            random.choices(['a','b','c'], k=size)
-        ))
+# Set choosen method for generating inputs
+METHOD = 'Random2' # 'Random1' | 'Random2'
+
+if (METHOD == 'Random1'):
+    # Create an array with random strings
+    # with individual lengths from sizes array
+    strings = []
+    for size in sizes:
+        strings.append(''.join(
+                random.choices(['a','b','c'], k=size)
+                ))
+elif(METHOD == 'Random2'):
+    # Create an array with strings generated as follows:
+    # generated a random position for the array,
+    # then fill the string randomly until this position,
+    # then copy chars from the start of the string
+    # until string size is completed
+    strings = []
+    for size in sizes:
+        q = random.randint(1, size)
+        s = (''.join(random.choices(['a', 'b', 'c'], k=q)))
+        for i in range(q+1, size+1):
+            s = s + s[(i-1) % q + 1]
+        strings.append(s)
 
 ############################################################
 
