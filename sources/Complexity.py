@@ -61,6 +61,8 @@ elif(METHOD == 'Random2'):
             s = s + s[(i-1) % q + 1]
         strings.append(s)
 
+print(*strings, sep="\n")
+
 ############################################################
 
 # Create an array with average timings from PeriodNaive
