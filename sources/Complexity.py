@@ -58,7 +58,7 @@ elif(METHOD == 'Random2'):
         q = random.randint(1, size)
         s = (''.join(random.choices(['a', 'b', 'c'], k=q)))
         for i in range(q+1, size+1):
-            s = s + s[(i-1) % q + 1]
+            s = s + s[((i-1) % q) + 1]
         strings.append(s)
 elif(METHOD == 'Random3'):
     # Create an array with strings using the same
@@ -70,7 +70,7 @@ elif(METHOD == 'Random3'):
         s = (''.join(random.choices(['a', 'b', 'c'], k=q-1)))
         s = s + 'd'
         for i in range(q+1, size+1):
-            s = s + s[(i-1) % q + 1]
+            s = s + s[((i-1) % q) + 1]
         strings.append(s)
 
 ############################################################
@@ -111,7 +111,7 @@ import csv
 
 row_list = [['id', 'size', 'result_PN', 'time_PN', 'result_PS', 'time_PS']]
 for i in range(RANGE):
-    row_list.append([i, sizes[i], results_PN[i], growth_PN[i], results_PS[i], growth_PS[i]])
+    row_list.append([i, len(strings[i]), results_PN[i], growth_PN[i], results_PS[i], growth_PS[i]])
 
 with open('results.csv', 'w', newline='') as file:
     writer = csv.writer(file)

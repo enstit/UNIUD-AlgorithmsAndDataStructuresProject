@@ -142,8 +142,7 @@ Si definisce un \textit{array} \texttt{sizes} di lunghezze $n$ dell'input con di
 \subsection{Generazione dell'\textit{array} degli input}
 Sono stati implementati diverse procedure per la generazione delle stringhe da utilizzare come input nel calcolo dei tempi di esecuzione degli algoritmi.\\
 Dopo attente analisi e sperimentazioni, si è deciso di utilizzare la procedura \textit{Random3}, descritta di seguito.\\
-La stringa $s$ di lunghezza $n$ viene generata su un alfabeto ternario \texttt{\{a,b,c\}} in modo che ogni lettera $s(i)$ della stringa sia generata in modo pseudo-casuale indipendentemente dalle altre fino alla posizione $q-1$, parametro scelto randomicamente nell'intervallo $[1,n]$.\\
-Ad $s(q)$ viene assegnato il carattere ``\texttt{d}'', mentre per le lettere rimanenti si procede assegnando a $s(i)$ il valore di $s( (i-1) \mod q+1 )$
+La stringa $s$ di lunghezza $n$ viene generata su un alfabeto ternario \texttt{\{a,b,c\}} in modo che ogni lettera $s(i)$ della stringa sia generata in modo pseudo-casuale indipendentemente dalle altre.\\
 \lstinputlisting[language=Python,firstline=39,lastline=74]{sources/Complexity.py}
 
 \subsection{Calcolo del tempo medio}
