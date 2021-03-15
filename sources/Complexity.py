@@ -37,7 +37,7 @@ for i in range(RANGE):
 ############################################################
 
 # Set choosen method for generating inputs
-METHOD = 'Random2' # 'Random1' | 'Random2'
+METHOD = 'Random3' # 'Random1' | 'Random2' | 'Random3'
 
 if (METHOD == 'Random1'):
     # Create an array with random strings
@@ -60,10 +60,10 @@ elif(METHOD == 'Random2'):
         for i in range(q+1, size+1):
             s = s + s[(i-1) % q + 1]
         strings.append(s)
-        
 elif(METHOD == 'Random3'):
-    # Create an array with strings using the same method of 'Random2',
-    # but the character in position q will be different from the others ('d')
+    # Create an array with strings using the same
+    # method of 'Random2', but the character in position
+    # q will be different from the others ('d')
     strings = []
     for size in sizes:
         q = random.randint(1, size)
@@ -73,43 +73,45 @@ elif(METHOD == 'Random3'):
             s = s + s[(i-1) % q + 1]
         strings.append(s)
 
-print(*strings, sep="\n")
-
 ############################################################
 
 # Create an array with average timings from PeriodNaive
 growth_PN = []
+results_PN = []
 for s in strings:
     i = 0
     t_passed = 0
     while ( t_passed <= t_min ):
         start = t.time()
-        PeriodNaive(s)
+        result = PeriodNaive(s)
         end = t.time()
         i += 1
         t_passed += end-start
+        results_PN.append(result)
     growth_PN.append(t_passed/i)
 
 # Create an array with average timings from PeriodSmart
 growth_PS = []
+results_PS = []
 for s in strings:
     i = 0
     t_passed = 0
     while ( t_passed <= t_min ):
         start = t.time()
-        PeriodSmart(s)
+        result = PeriodSmart(s)
         end = t.time()
         i += 1
         t_passed += end-start
+        results_PS.append(result)
     growth_PS.append(t_passed/i)
 
 ############################################################
 
 import csv
 
-row_list = [['id', 'size', 'time_PN', 'time_PS']]
+row_list = [['id', 'size', 'result_PN', 'time_PN', 'result_PS', 'time_PS']]
 for i in range(RANGE):
-    row_list.append([i, sizes[i], growth_PN[i], growth_PS[i]])
+    row_list.append([i, sizes[i], results_PN[i], growth_PN[i], results_PS[i], growth_PS[i]])
 
 with open('results.csv', 'w', newline='') as file:
     writer = csv.writer(file)
