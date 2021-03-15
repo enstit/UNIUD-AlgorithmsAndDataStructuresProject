@@ -165,6 +165,7 @@ Visualizzando i risultati dei tempi di esecuzione con le rispettive lunghezze de
 	axis x line=bottom,
     axis y line=left,
     legend style={ at={(0.95,0.05)}, anchor=south east},
+    every x tick scale label/.style={at={(xticklabel cs:1)},anchor=north},
 	]
 \addplot[mark=*, blue] table [x=size, y=time_PN, col sep=comma]{sources/results.csv};
 \addplot[mark=*, orange] table [x=size, y=time_PS, col sep=comma]{sources/results.csv};
@@ -179,7 +180,8 @@ Visualizzando i risultati dei tempi di esecuzione con le rispettive lunghezze de
     axis y line=right,
     ylabel near ticks, yticklabel pos=right,
     ylabel={Risultato dell'algoritmo},
-	opacity=0.25
+	opacity=0.25,
+	every y tick scale label/.style={at={(yticklabel cs:1)},anchor=south east},
 ]
 \addplot[mark=*, purple] table [x=size, y=result_PN, col sep=comma]{sources/results.csv};
 \end{axis}
