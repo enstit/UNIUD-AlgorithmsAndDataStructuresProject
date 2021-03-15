@@ -60,6 +60,18 @@ elif(METHOD == 'Random2'):
         for i in range(q+1, size+1):
             s = s + s[(i-1) % q + 1]
         strings.append(s)
+        
+elif(METHOD == 'Random3'):
+    # Create an array with strings using the same method of 'Random2',
+    # but the character in position q will be different from the others ('d')
+    strings = []
+    for size in sizes:
+        q = random.randint(1, size)
+        s = (''.join(random.choices(['a', 'b', 'c'], k=q-1)))
+        s = s + 'd'
+        for i in range(q+1, size+1):
+            s = s + s[(i-1) % q + 1]
+        strings.append(s)
 
 print(*strings, sep="\n")
 
