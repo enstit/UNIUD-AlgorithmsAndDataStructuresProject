@@ -1,7 +1,8 @@
 # Example of Theta (1) function
 def PeriodSmart(s):
-    a = 'a' * 100_000_000
-    return True
+    for i in range(len(s)):
+        j = i
+    return 'Algortimo dal implementare'
 
 # Returns True if string t is a Border of string s
 def isStringBorder(t, s):
