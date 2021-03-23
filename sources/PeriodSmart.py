@@ -1,8 +1,17 @@
-# Example of Theta (1) function
-def PeriodSmart(s):
-    for i in range(len(s)):
-        j = i
-    return 'Algortimo dal implementare'
+# Returns the minimum fractional period of s
+def periodSmart(s):
+    n = len(s)
+    pf = [None] * n
+    pf[0] = 0
+    for i in range (1, n, 1):
+        j = pf[i-1]
+        while j > 0 and s[i] != s[j]:
+            j = pf[j-1]
+        if s[i] == s[j]:
+            j += 1
+        pf[i] = j
+    maxValue = pf[n-1]
+    return n - maxValue
 
 # Returns True if string t is a Border of string s
 def isStringBorder(t, s):
