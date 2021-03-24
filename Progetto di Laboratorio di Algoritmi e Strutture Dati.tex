@@ -57,7 +57,7 @@ dove $n$ denota la lunghezza e $s(k)$ è il $k$-esimo carattere della stringa $s
 \textbf{Esempio} Il \emph{periodo frazionario minimo} della stringa \texttt{abcabcab} è 3, mentre il \emph{periodo frazionario minimo} della stringa \texttt{aba} è 2.\\
 \\
 Si implementano di seguito due algoritmi scritti in linguaggio Python3 per il calcolo del \emph{periodo frazionario minimo} di una qualsiasi stringa.\\
-In particolare, l'algoritmo \textit{PeriodNa{\"i}ve} con complessità $\Theta(n^2)$, e l'algoritmo \textit{PeriodSmart} con complessità $\Theta(n)$.
+In particolare, l'algoritmo \textit{PeriodNa{\"i}ve} con complessità $O(n^2)$, e l'algoritmo \textit{PeriodSmart} con complessità $\Theta(n)$.
 
 
 
@@ -65,7 +65,7 @@ In particolare, l'algoritmo \textit{PeriodNa{\"i}ve} con complessità $\Theta(n^
 
 \subsection{Descrizione dell'algoritmo}
 L'algoritmo utilizza un ciclo \texttt{for}  con un intero $p$ che varia da 1 a $n$ e termina restituendo $p$ alla prima iterazione che soddisfa la proprietà ($\star$). Quest'ultima viene verificata confrontando la congruenza tra il prefisso della stringa $s$ fino alla posizione $n-p$, e il suffisso dalla posizione $p$ fino al termine della stringa. Nel caso in cui queste parti combacino, la dimensione $p$ è esattamente il \textit{periodo frazionario minimo} cercato.\\
-Nel caso dell'inserimento in input della stringa vuota, l'algoritmo restituirà il risultato di errore ``\texttt{-1}'' in quanto $n$ varrà 0 e quindi il codice all'interno del ciclo \texttt{for} non verrà mai eseguito.
+Nel caso dell'inserimento in input della stringa vuota, l'algoritmo restituirà il risultato ``\texttt{0}'' in quanto $n$ varrà 0 e quindi il codice all'interno del ciclo \texttt{for} non verrà mai eseguito.
 
 \subsection{Codice dell'algoritmo}  
 \lstinputlisting[language=Python,firstline=1,lastline=13]{sources/PeriodNaive.py} 
@@ -142,9 +142,9 @@ Si definisce un \textit{array} \texttt{sizes} di lunghezze $n$ dell'input con di
 \subsection{Generazione dell'\textit{array} degli input}
 Sono stati implementati diverse procedure per la generazione delle stringhe da utilizzare come input nel calcolo dei tempi di esecuzione degli algoritmi.\\
 Dopo attente analisi e sperimentazioni, si è deciso di utilizzare la procedura \textit{Random3}, descritta di seguito.\\
-La stringa $s$ di lunghezza $n$ viene generata su un alfabeto ternario \texttt{\{a,b,c\}} in modo che ogni lettera $s(i)$ della stringa sia generata in modo pseudo-casuale indipendentemente dalle altre fino alla posizione $q-1$, parametro scelto randomicamente nell'intervallo $[1,n]$.\\
-Ad $s(q)$ viene assegnato il carattere ``\texttt{d}'', mentre per le lettere rimanenti si procede assegnando a $s(i)$ il valore di $s( (i-1) \mod q+1 )$
+La stringa $s$ di lunghezza $n$ viene generata su un alfabeto ternario \texttt{\{a,b,c\}} in modo che ogni lettera $s(i)$ della stringa sia generata in modo pseudo-casuale indipendentemente dalle altre fino alla posizione $q-1$, parametro scelto randomicamente nell'intervallo $[1,n]$. Ad $s(q)$ viene assegnato il carattere ``\texttt{d}'', mentre per le lettere rimanenti si procede assegnando a $s(i)$ il valore di $s( (i-1) \mod q )$.
 \lstinputlisting[language=Python,firstline=39,lastline=74]{sources/Complexity.py}
+Con questa implementazione, ci si aspetta che il risultato degli algoritmi coincida con la posizione del carattere ``\texttt{d}'', ovvero con il parametro \textit{q}.
 
 \subsection{Calcolo del tempo medio}
 Vengono salvati in due array \texttt{growth\_PN} e \texttt{growth\_PS} rispettivamente i tempi di esecuzione dell'algoritmo \hyperlink{section.2}{\textit{PeriodNa{\"i}ve}} e \hyperlink{section.3}{\textit{PeriodSmart}} al variare della lunghezza $n$ della stringa fornita in input, seguendo la distribuzione indicata dall'array \texttt{strings} calcolata \hyperlink{subsection.4.3}{in precedenza}.
@@ -157,6 +157,20 @@ Visualizzando i risultati dei tempi di esecuzione con le rispettive lunghezze de
     width=1.25\textwidth,
     height=0.95\textwidth
 }
+
+\begin{axis}[
+    axis line style={->},
+	axis x line=bottom,
+	xtick=\empty,
+    axis y line=right,
+    ylabel near ticks, yticklabel pos=right,
+    ylabel={Risultato dell'algoritmo},
+	opacity=0.4,
+	every y tick scale label/.style={at={(yticklabel cs:1)},anchor=south east},
+]
+\addplot[mark=*, black, fill opacity=0.10, draw opacity=0.10] table [x=size, y=result_PS, col sep=comma]{sources/results.csv};
+\end{axis}
+
 \begin{axis}[
 	title={Tempi di esecuzione in relazione alla dimensione dell'input},
     axis line style={->},
@@ -175,20 +189,6 @@ Visualizzando i risultati dei tempi di esecuzione con le rispettive lunghezze de
 \addlegendentry{Algoritmo \textit{PeriodSmart}}
 \end{axis}
 
-\begin{axis}[
-    axis line style={->},
-	axis x line=bottom,
-	xtick=\empty,
-    axis y line=right,
-    ylabel near ticks, yticklabel pos=right,
-    ylabel={Risultato dell'algoritmo},
-	opacity=0.25,
-	every y tick scale label/.style={at={(yticklabel cs:1)},anchor=south east},
-]
-\addplot[mark=*, purple] table [x=size, y=result_PN, col sep=comma]{sources/results.csv};
-\addplot[mark=*, black] table [x=size, y=result_PS, col sep=comma]{sources/results.csv};
-\end{axis}
-
 \end{tikzpicture}
 \end{center}
 
@@ -198,6 +198,19 @@ Visualizzando i risultati dei tempi di esecuzione con le rispettive lunghezze de
     width=1.25\textwidth,
     height=0.95\textwidth
 }
+
+\begin{axis}[
+	xmode=log,
+	ymode=log,
+    axis line style={->},
+	axis x line=bottom,
+	xtick=\empty,
+    axis y line=right,
+  	ylabel={Risultato dell'algoritmo},
+	opacity=0.4
+]
+\addplot[mark=*, black, fill opacity=0.10, draw opacity=0.10] table [x=size, y=result_PS, col sep=comma]{sources/results.csv};
+\end{axis}
 
 \begin{axis}[
 	xmode=log,
@@ -215,20 +228,6 @@ Visualizzando i risultati dei tempi di esecuzione con le rispettive lunghezze de
 \addplot[mark=*, orange] table [x=size, y=time_PS, col sep=comma]{sources/results.csv};
 \addlegendentry{Algoritmo \textit{PeriodNa{\"i}ve}}
 \addlegendentry{Algoritmo \textit{PeriodSmart}}
-\end{axis}
-
-\begin{axis}[
-	xmode=log,
-	ymode=log,
-    axis line style={->},
-	axis x line=bottom,
-	xtick=\empty,
-    axis y line=right,
-  	ylabel={Risultato dell'algoritmo},
-	opacity=0.25
-]
-\addplot[mark=*, purple] table [x=size, y=result_PN, col sep=comma]{sources/results.csv};
-\addplot[mark=*, black] table [x=size, y=result_PS, col sep=comma]{sources/results.csv};
 \end{axis}
 
 \end{tikzpicture}
