@@ -1,9 +1,9 @@
 # Returns the minimum fractional period of s
-def periodSmart(s):
+def PeriodSmart(s):
     n = len(s)
     pf = [None] * n
     pf[0] = 0
-    for i in range (1, n, 1):
+    for i in range (1, n):
         j = pf[i-1]
         while j > 0 and s[i] != s[j]:
             j = pf[j-1]

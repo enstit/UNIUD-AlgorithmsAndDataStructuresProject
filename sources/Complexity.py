@@ -58,7 +58,7 @@ elif(METHOD == 'Random2'):
         q = random.randint(1, size)
         s = (''.join(random.choices(['a', 'b', 'c'], k=q)))
         for i in range(q+1, size+1):
-            s = s + s[((i-1) % q) + 1]
+            s = s + s[((i-1) % q)]
         strings.append(s)
 elif(METHOD == 'Random3'):
     # Create an array with strings using the same
@@ -70,7 +70,7 @@ elif(METHOD == 'Random3'):
         s = (''.join(random.choices(['a', 'b', 'c'], k=q-1)))
         s = s + 'd'
         for i in range(q+1, size+1):
-            s = s + s[((i-1) % q) + 1]
+            s = s + s[((i-1) % q)]
         strings.append(s)
 
 ############################################################
@@ -87,7 +87,7 @@ for s in strings:
         end = t.time()
         i += 1
         t_passed += end-start
-        results_PN.append(result)
+    results_PN.append(result)
     growth_PN.append(t_passed/i)
 
 # Create an array with average timings from PeriodSmart
@@ -102,7 +102,7 @@ for s in strings:
         end = t.time()
         i += 1
         t_passed += end-start
-        results_PS.append(result)
+    results_PS.append(result)
     growth_PS.append(t_passed/i)
 
 ############################################################

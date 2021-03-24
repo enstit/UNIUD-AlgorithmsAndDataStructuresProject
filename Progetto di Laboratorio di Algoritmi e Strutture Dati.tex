@@ -186,6 +186,7 @@ Visualizzando i risultati dei tempi di esecuzione con le rispettive lunghezze de
 	every y tick scale label/.style={at={(yticklabel cs:1)},anchor=south east},
 ]
 \addplot[mark=*, purple] table [x=size, y=result_PN, col sep=comma]{sources/results.csv};
+\addplot[mark=*, black] table [x=size, y=result_PS, col sep=comma]{sources/results.csv};
 \end{axis}
 
 \end{tikzpicture}
@@ -227,6 +228,7 @@ Visualizzando i risultati dei tempi di esecuzione con le rispettive lunghezze de
 	opacity=0.25
 ]
 \addplot[mark=*, purple] table [x=size, y=result_PN, col sep=comma]{sources/results.csv};
+\addplot[mark=*, black] table [x=size, y=result_PS, col sep=comma]{sources/results.csv};
 \end{axis}
 
 \end{tikzpicture}
