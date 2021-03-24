@@ -30,13 +30,16 @@
 \definecolor{snow}{RGB}{250, 250, 250}
 \definecolor{green}{RGB}{0, 128, 0}
 \definecolor{cyan}{RGB}{64, 128, 128}
+\definecolor{folly}{rgb}{1.0, 0.0, 0.31}
 
 \lstdefinelanguage{python}{
-morekeywords={and,break,def,elif,else,for,from,global,if,import,as,in,is,lambda,not,or,pass,print,return,try,while}, morekeywords=[2]{abs,all,any,bool,chr,dict,dir,divmod,enumerate,eval,file,filter,float,format,globals,help,id,input,int,len,list,locals,long,map,min,next,pow,range,input,round,set,str,sum,super,tuple,type,unichr,unicode,vars}, keywordstyle=\color{green},
+	morekeywords={and,assert,break,def,elif,else,for,from,global,if,import,as,in,is,lambda,not,or,pass,print,return,try,while},
+	morekeywords=[2]{abs,all,any,bool,chr,dict,dir,divmod,enumerate,eval,file,filter,float,format,globals,help,id,
+	input,int,len,list,locals,long,map,min,next,pow,range,input,round,set,str,sum,super,tuple,type,unichr,unicode,vars}, keywordstyle=\color{green},
+	morestring=[b]", morestring=[b]', stringstyle=\color{folly}, showstringspaces=false, upquote=true,
     morecomment=[l]\#, commentstyle=\color{cyan},
     frame=single, framexleftmargin=2em, backgroundcolor=\color{snow},
-    numbers=left, numberstyle=\footnotesize\color{halfgray}\ttfamily, xleftmargin=1.5em, basicstyle=\ttfamily\small,
-    upquote=true
+    numbers=left, numberstyle=\footnotesize\color{halfgray}\ttfamily, xleftmargin=1.5em, basicstyle=\ttfamily\small
 }
 
 
@@ -68,13 +71,13 @@ L'algoritmo utilizza un ciclo \texttt{for}  con un intero $p$ che varia da 1 a $
 Nel caso dell'inserimento in input della stringa vuota, l'algoritmo restituirà il risultato ``\texttt{0}'' in quanto $n$ varrà 0 e quindi il codice all'interno del ciclo \texttt{for} non verrà mai eseguito.
 
 \subsection{Codice dell'algoritmo}  
-\lstinputlisting[language=Python,firstline=1,lastline=13]{sources/PeriodNaive.py} 
+\lstinputlisting[language=Python,firstline=1,lastline=14]{sources/PeriodNaive.py} 
 
 \subsection{Osservazioni sul codice}
 
 Alternativamente al controllo della congruenza tra il prefisso $[1 \dots n-p]$ e suffisso $[p \dots n]$, la funzione \textit{isPeriod} potrebbe venire implementata anche con un ciclo secondario per il controllo dell'uguaglianza tra $s(j)$ e $s(j+p)$, con $j$ che varia da $1$ a $n-p$.\\
 Tale implementazione sarebbe stata scritta così:
-\lstinputlisting[language=Python,firstline=17,lastline=24]{sources/PeriodNaive.py} 
+\lstinputlisting[language=Python,firstline=18,lastline=25]{sources/PeriodNaive.py} 
 Il motivo per cui non è stata scelta questa implementazione è che nel caso di un generico input $s$, il ciclo interno si sarebbe fermato alla prima disuguaglianza trovata. Questo avrebbe di certo ottimizzato l'algoritmo in pratica, ma avrebbe reso più difficile un confronto generale tra questo algoritmo e la versione \textit{smart} illustrata di seguito, che ha un andamento lineare sulla dimensione dell'input.
 
 

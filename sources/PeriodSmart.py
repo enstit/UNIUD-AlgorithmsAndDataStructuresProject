@@ -1,7 +1,5 @@
 # Returns the minimum fractional period of s
 def PeriodSmart(s):
-    if(s == ""):
-        return -1
     n = len(s)
     pf = [0]
     for i in range (1, n):

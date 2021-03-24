@@ -1,5 +1,6 @@
 # Returns the minimum fractional period of s
 def PeriodNaive(s):
+    assert s, "String can't be empty!"
     n = len(s)
     for p in range(1,n+1):
         if(_isPeriod(s,p)):
