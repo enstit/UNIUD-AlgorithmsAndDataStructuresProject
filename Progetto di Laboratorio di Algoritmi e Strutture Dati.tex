@@ -47,6 +47,10 @@
 \begin{document}
 
 \maketitle
+\tableofcontents
+
+
+\clearpage
 
 \section{Il perido frazionario}
 \textbf{Definizione} Il \textit{periodo frazionario minimo} di una stringa $s$ è il più piccolo intero $p>0$ che soddisfa la seguente
@@ -55,7 +59,7 @@ proprietà:
 s(i) = s(i+p)\qquad \forall i = 1, \dots , (n-p) \tag{$\star$}
 \end{equation}
 
-dove $n$ denota la lunghezza e $s(k)$ è il $k$-esimo carattere della stringa $s$.\\
+dove $n$ denota la lunghezza e $s(k)$ \`e il $k$-esimo carattere della stringa $s$.\\
 \\
 \textbf{Esempio} Il \emph{periodo frazionario minimo} della stringa \texttt{abcabcab} è 3, mentre il \emph{periodo frazionario minimo} della stringa \texttt{aba} è 2.\\
 \\
@@ -67,17 +71,16 @@ In particolare, l'algoritmo \textit{PeriodNa{\"i}ve} con complessità $O(n^2)$, 
 \section{Algoritmo \textit{PeriodNa{\"i}ve}}
 
 \subsection{Descrizione dell'algoritmo}
-L'algoritmo utilizza un ciclo \texttt{for}  con un intero $p$ che varia da 1 a $n$ e termina restituendo $p$ alla prima iterazione che soddisfa la proprietà ($\star$). Quest'ultima viene verificata confrontando la congruenza tra il prefisso della stringa $s$ fino alla posizione $n-p$, e il suffisso dalla posizione $p$ fino al termine della stringa. Nel caso in cui queste parti combacino, la dimensione $p$ è esattamente il \textit{periodo frazionario minimo} cercato.\\
-Nel caso dell'inserimento in input della stringa vuota, l'algoritmo restituirà il risultato ``\texttt{0}'' in quanto $n$ varrà 0 e quindi il codice all'interno del ciclo \texttt{for} non verrà mai eseguito.
+L'algoritmo utilizza un ciclo \texttt{for}  con un intero $p$ che varia da 1 a $n$ e termina restituendo $p$ alla prima iterazione che soddisfa la proprietà ($\star$). Quest'ultima viene verificata confrontando la congruenza tra il prefisso della stringa $s$ fino alla posizione $n-p$, e il suffisso dalla posizione $p$ fino al termine della stringa. Nel caso in cui queste parti combacino, la dimensione $p$ è esattamente il \textit{periodo frazionario minimo} cercato.
 
 \subsection{Codice dell'algoritmo}  
-\lstinputlisting[language=Python,firstline=1,lastline=14]{sources/PeriodNaive.py} 
+\lstinputlisting[language=Python,firstline=1,lastline=13]{sources/PeriodNaive.py} 
 
-\subsection{Osservazioni sul codice}
+\subsubsection{Osservazioni sul codice}
 
 Alternativamente al controllo della congruenza tra il prefisso $[1 \dots n-p]$ e suffisso $[p \dots n]$, la funzione \textit{isPeriod} potrebbe venire implementata anche con un ciclo secondario per il controllo dell'uguaglianza tra $s(j)$ e $s(j+p)$, con $j$ che varia da $1$ a $n-p$.\\
 Tale implementazione sarebbe stata scritta così:
-\lstinputlisting[language=Python,firstline=18,lastline=25]{sources/PeriodNaive.py} 
+\lstinputlisting[language=Python,firstline=17,lastline=24]{sources/PeriodNaive.py} 
 Il motivo per cui non è stata scelta questa implementazione è che nel caso di un generico input $s$, il ciclo interno si sarebbe fermato alla prima disuguaglianza trovata. Questo avrebbe di certo ottimizzato l'algoritmo in pratica, ma avrebbe reso più difficile un confronto generale tra questo algoritmo e la versione \textit{smart} illustrata di seguito, che ha un andamento lineare sulla dimensione dell'input.
 
 
@@ -152,7 +155,10 @@ Con questa implementazione, ci si aspetta che il risultato degli algoritmi coinc
 \subsection{Calcolo del tempo medio}
 Vengono salvati in due array \texttt{growth\_PN} e \texttt{growth\_PS} rispettivamente i tempi di esecuzione dell'algoritmo \hyperlink{section.2}{\textit{PeriodNa{\"i}ve}} e \hyperlink{section.3}{\textit{PeriodSmart}} al variare della lunghezza $n$ della stringa fornita in input, seguendo la distribuzione indicata dall'array \texttt{strings} calcolata \hyperlink{subsection.4.3}{in precedenza}.
 \lstinputlisting[language=Python,firstline=78,lastline=106]{sources/Complexity.py}
-Visualizzando i risultati dei tempi di esecuzione con le rispettive lunghezze dell'input, si ottiene il grafico sotto.
+
+\subsection{Risultati della sperimentazione}
+
+Visualizzando i risultati dei tempi di esecuzione con le rispettive lunghezze dell'input, si ottengono i grafici che seguono:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -175,7 +181,7 @@ Visualizzando i risultati dei tempi di esecuzione con le rispettive lunghezze de
 \end{axis}
 
 \begin{axis}[
-	title={Tempi di esecuzione in relazione alla dimensione dell'input},
+	title={Tempi di esecuzione in relazione alla dimensione dell'input e risultato degli algoritmi},
     axis line style={->},
     xlabel={\small Dimensione dell'input (\textit{numero di caratteri})},
     ylabel={\small Tempo (\textit{sec})},
@@ -194,6 +200,8 @@ Visualizzando i risultati dei tempi di esecuzione con le rispettive lunghezze de
 
 \end{tikzpicture}
 \end{center}
+
+
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -218,7 +226,7 @@ Visualizzando i risultati dei tempi di esecuzione con le rispettive lunghezze de
 \begin{axis}[
 	xmode=log,
 	ymode=log,
-	title={Tempi di esecuzione in relazione alla dimensione dell'input},
+	title={Tempi di esecuzione in relazione alla dimensione dell'input e risultato degli algoritmi},
 	xlabel={\small Dimensione dell'input (\textit{numero di caratteri})},
     ylabel={\small Tempo (\textit{sec})},
     legend style={ at={(0.95,0.05)}, anchor=south east},
@@ -235,5 +243,8 @@ Visualizzando i risultati dei tempi di esecuzione con le rispettive lunghezze de
 
 \end{tikzpicture}
 \end{center}
+
+Entrambi i grafici confermano l'andamento lineare dell'algoritmo \textit{PeriodSmart} al variare della dimensione dell'input.\\
+Per quanto riguarda l'algoritmo \textit{PeriodNa{\"i}ve}, invece, i tempi di esecuzione sono molto più legati all'input: avendo inserito anche il risultato degli algoritmi, possiamo notare come un risultato molto inferiore alla dimensione dell'input coincida con un tempo di esecuzione molto ridotto. Al contrario, a risultati molto vicini alla dimensione dell'input coincide un tempo di esecuzione molto superiore. In generale, si può affermare dai grafici che la complessità di \textit{PeriodNa{\"i}ve} sia nell'ordine di $n^2$ nel caso peggiore, ovvero una complessità complessiva di $O(n^2)$.
 
 \end{document}

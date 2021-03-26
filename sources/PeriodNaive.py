@@ -5,7 +5,6 @@ def PeriodNaive(s):
     for p in range(1,n+1):
         if(_isPeriod(s,p)):
             return p
-    return 0 # The input is an empty string
 
 # Returns True if p is a fractional period of s,
 # False otherwhise.
