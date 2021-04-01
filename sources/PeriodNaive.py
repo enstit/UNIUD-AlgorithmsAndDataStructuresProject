@@ -7,7 +7,7 @@ def PeriodNaive(s):
             return p
 
 # Returns True if p is a fractional period of s,
-# False otherwhise.
+# False otherwise.
 def _isPeriod(s,p):
     n = len(s)
     return (s[:n-p] == s[p:])
@@ -15,7 +15,7 @@ def _isPeriod(s,p):
 ##############################
 
 # Returns True if p is a fractional period of s,
-# False otherwhise.
+# False otherwise.
 def _isPeriod_2(s,p):
     n = len(s)
     for j in range(0,n-p):

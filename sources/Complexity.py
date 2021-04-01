@@ -1,7 +1,7 @@
 from PeriodNaive import PeriodNaive
 from PeriodSmart import PeriodSmart
+from InputGenerator import InputGenerator
 import matplotlib.pyplot as plt
-import random
 
 ############################################################
 
@@ -21,57 +21,13 @@ t_min = r*((1/TIME_ERROR)+1)
 
 ############################################################
 
-# Set choosen parameters
+# Set chosen parameters
 FIRST_SIZE = 1_000
 LAST_SIZE = 500_000
 RANGE = 100
 
-# Create an array with exponential sizes
-# in range(FIRST_SIZE,LAST_SIZE)
-sizes = []
-a = FIRST_SIZE
-b = (LAST_SIZE/FIRST_SIZE)**(float(1/(RANGE-1)))
-for i in range(RANGE):
-    sizes.append(int(a*(b**i)))
-
-############################################################
-
-# Set choosen method for generating inputs
-METHOD = 'Random3' # 'Random1' | 'Random2' | 'Random3'
-
-if (METHOD == 'Random1'):
-    # Create an array with random strings
-    # with individual lengths from sizes array
-    strings = []
-    for size in sizes:
-        strings.append(''.join(
-                random.choices(['a','b','c'], k=size)
-                ))
-elif(METHOD == 'Random2'):
-    # Create an array with strings generated as follows:
-    # generated a random position for the array,
-    # then fill the string randomly until this position,
-    # then copy chars from the start of the string
-    # until string size is completed
-    strings = []
-    for size in sizes:
-        q = random.randint(1, size)
-        s = (''.join(random.choices(['a', 'b', 'c'], k=q)))
-        for i in range(q+1, size+1):
-            s = s + s[((i-1) % q)]
-        strings.append(s)
-elif(METHOD == 'Random3'):
-    # Create an array with strings using the same
-    # method of 'Random2', but the character in position
-    # q will be different from the others ('d')
-    strings = []
-    for size in sizes:
-        q = random.randint(1, size)
-        s = (''.join(random.choices(['a', 'b', 'c'], k=q-1)))
-        s = s + 'd'
-        for i in range(q+1, size+1):
-            s = s + s[((i-1) % q)]
-        strings.append(s)
+# Generate input array
+strings = InputGenerator(FIRST_SIZE,LAST_SIZE,RANGE)
 
 ############################################################
 
@@ -119,14 +75,14 @@ with open('results.csv', 'w', newline='') as file:
 
 ############################################################
 
-plt.figure(figsize=(10, 6))
-plt.plot(sizes, growth_PN, linestyle='-', marker='.', label = "PeriodNaive")
-plt.plot(sizes, growth_PS, linestyle='-', marker='.', label = "PeriodSmart")
-plt.title('Average timings for random inputs')
-plt.xlabel('Input size')
-plt.xscale('linear') # 'linear'|'log'
-plt.xlim(FIRST_SIZE,LAST_SIZE) 
-plt.ylabel('Timing') 
-plt.yscale('linear') # 'linear'|'log'
-plt.legend() 
-plt.show()
+# plt.figure(figsize=(10, 6))
+# plt.plot(sizes, growth_PN, linestyle='-', marker='.', label = "PeriodNaive")
+# plt.plot(sizes, growth_PS, linestyle='-', marker='.', label = "PeriodSmart")
+# plt.title('Average timings for random inputs')
+# plt.xlabel('Input size')
+# plt.xscale('linear') # 'linear'|'log'
+# plt.xlim(FIRST_SIZE,LAST_SIZE) 
+# plt.ylabel('Timing') 
+# plt.yscale('linear') # 'linear'|'log'
+# plt.legend() 
+# plt.show()

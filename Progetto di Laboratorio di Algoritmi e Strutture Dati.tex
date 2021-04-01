@@ -4,10 +4,12 @@
 \usepackage[T1]{fontenc}
 \usepackage{geometry}	% Set document margins
 \usepackage{amsmath}
+\usepackage{mathtools}
 \usepackage[hidelinks]{hyperref}
 \usepackage{color}
 \usepackage{graphicx}
 \usepackage{textcomp}	% For single quotes in codes
+\usepackage{indentfirst}	% For indenting first paragraph
 
 \usepackage{pgfplots}
 
@@ -123,7 +125,8 @@ Si definisce un \textit{array} \texttt{sizes} di lunghezze $n$ dell'input con di
 \bigl\lfloor A \cdot B^i \bigl\rfloor = 1000 \quad \text{se} \quad i = 0 \qquad \Rightarrow \qquad \bigl\lfloor A \cdot 1 \bigl\rfloor = 1000 \qquad \Rightarrow \qquad A = 1000\\
 \bigl\lfloor 1000 \cdot B^i \bigl\rfloor = 500000 \quad \text{se} \quad i = 99 \qquad \Rightarrow \qquad \bigl\lfloor B^{99} \bigl\rfloor = 500 \qquad \Rightarrow \qquad B = \sqrt[99]{500}
 \end{gather*}
-\lstinputlisting[language=Python,firstline=24,lastline=35]{sources/Complexity.py}
+\lstinputlisting[language=Python,firstline=24,lastline=27]{sources/Complexity.py}
+\lstinputlisting[language=Python,firstline=10,lastline=18]{sources/InputGenerator.py}
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -149,12 +152,13 @@ Si definisce un \textit{array} \texttt{sizes} di lunghezze $n$ dell'input con di
 Sono stati implementati diverse procedure per la generazione delle stringhe da utilizzare come input nel calcolo dei tempi di esecuzione degli algoritmi.\\
 Dopo attente analisi e sperimentazioni, si è deciso di utilizzare la procedura \textit{Random3}, descritta di seguito.\\
 La stringa $s$ di lunghezza $n$ viene generata su un alfabeto ternario \texttt{\{a,b,c\}} in modo che ogni lettera $s(i)$ della stringa sia generata in modo pseudo-casuale indipendentemente dalle altre fino alla posizione $q-1$, parametro scelto randomicamente nell'intervallo $[1,n]$. Ad $s(q)$ viene assegnato il carattere ``\texttt{d}'', mentre per le lettere rimanenti si procede assegnando a $s(i)$ il valore di $s( (i-1) \mod q )$.
-\lstinputlisting[language=Python,firstline=39,lastline=74]{sources/Complexity.py}
+\lstinputlisting[language=Python,firstline=3,lastline=8]{sources/InputGenerator.py}
+\lstinputlisting[language=Python,firstline=37,lastline=46]{sources/InputGenerator.py}
 Con questa implementazione, ci si aspetta che il risultato degli algoritmi coincida con la posizione del carattere ``\texttt{d}'', ovvero con il parametro \textit{q}.
 
 \subsection{Calcolo del tempo medio}
 Vengono salvati in due array \texttt{growth\_PN} e \texttt{growth\_PS} rispettivamente i tempi di esecuzione dell'algoritmo \hyperlink{section.2}{\textit{PeriodNa{\"i}ve}} e \hyperlink{section.3}{\textit{PeriodSmart}} al variare della lunghezza $n$ della stringa fornita in input, seguendo la distribuzione indicata dall'array \texttt{strings} calcolata \hyperlink{subsection.4.3}{in precedenza}.
-\lstinputlisting[language=Python,firstline=78,lastline=106]{sources/Complexity.py}
+\lstinputlisting[language=Python,firstline=34,lastline=62]{sources/Complexity.py}
 
 \subsection{Risultati della sperimentazione}
 
@@ -246,5 +250,38 @@ Visualizzando i risultati dei tempi di esecuzione con le rispettive lunghezze de
 
 Entrambi i grafici confermano l'andamento lineare dell'algoritmo \textit{PeriodSmart} al variare della dimensione dell'input.\\
 Per quanto riguarda l'algoritmo \textit{PeriodNa{\"i}ve}, invece, i tempi di esecuzione sono molto più legati all'input: avendo inserito anche il risultato degli algoritmi, possiamo notare come un risultato molto inferiore alla dimensione dell'input coincida con un tempo di esecuzione molto ridotto. Al contrario, a risultati molto vicini alla dimensione dell'input coincide un tempo di esecuzione molto superiore. In generale, si può affermare dai grafici che la complessità di \textit{PeriodNa{\"i}ve} sia nell'ordine di $n^2$ nel caso peggiore, ovvero una complessità complessiva di $O(n^2)$.
+
+
+\section{Ulteriori osservazioni}
+
+\subsection{Caso pessimo per l'algoritmo PeriodNa{\"i}ve}
+
+\subsubsection{Ideazione dell'input}
+Ritorniamo sul primo algoritmo proposto in questo studio
+\lstinputlisting[language=Python,firstline=1,lastline=13]{sources/PeriodNaive.py} 
+e ci chiediamo come debba essere formato un input che funga da caso pessimo.
+
+Notiamo che il codice principale è composto da un ciclo \texttt{for} con indice $p$ varia da 1 alla lunghezza dell'input, ma termina se la porzione della stringa dall'inizio fino alla posizione $p$ è un periodo frazionario minimo. Dunque, per massimizzare i tempi di esecuzione, dobbiamo massimizzare la posizione $p$ che rende vero il controllo citato.
+
+Una possibile implementazione del codice per la creazione di tale input può essere formalizzato come segue: la stringa $s$ di lunghezza $n$ viene generata su un alfabeto ternario \texttt{\{a,b,c\}} in modo tale che per ogni sottostringa $t$ che va da un carattere \texttt{a} non preceduto da altro \texttt{a}, al primo carattere \texttt{c} non seguito da un altro \texttt{c} è generata seguendo lo schema
+\begin{equation*}
+t(i) = i*\texttt{a} + i*\texttt{b} + i*\texttt{c}
+\end{equation*}
+dove $i*\texttt{n}$ indica il carattere \texttt{n} ripetuto $i$ volte.
+La stringa $s$ così formata, viene troncata se necessario al raggiungimento del $n$-esimo carattere.
+
+Un esempi di stringa formata in questo modo è:
+\begin{equation*}
+s(30) = \underbrace{\texttt{abc}}_{t(1)} \underbrace{\texttt{aabbcc}}_{t(2)} \underbrace{\texttt{aaabbbccc}}_{t(3)} \underbrace{\texttt{aaaabbbbcccc}}_{t(4)},
+\end{equation*}
+mentre un altro esempio (con l'ultima sottostringa $t$ ``non completa'') è
+\begin{equation*}
+s(40) = \underbrace{\texttt{abc}}_{t(1)} \underbrace{\texttt{aabbcc}}_{t(2)} \underbrace{\texttt{aaabbbccc}}_{t(3)} \underbrace{\texttt{aaaabbbbcccc}}_{t(4)} \underbrace{\texttt{aaaaabbbbb\textcolor{red}{ccccc}}}_{t(5)}.
+\end{equation*}
+
+
+\subsubsection{Generazione dell'input}
+
+
 
 \end{document}
