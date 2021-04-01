@@ -10,9 +10,7 @@
 \usepackage{graphicx}
 \usepackage{textcomp}	% For single quotes in codes
 \usepackage{indentfirst}	% For indenting first paragraph
-
 \usepackage{pgfplots}
-
 
 \title{\textbf{Laboratorio di Algoritmi e Strutture Dati 2020/2021} --- Prima parte}
 \date{\today}
@@ -41,10 +39,10 @@
 	morestring=[b]", morestring=[b]', stringstyle=\color{folly}, showstringspaces=false, upquote=true,
     morecomment=[l]\#, commentstyle=\color{cyan},
     frame=single, framexleftmargin=2em, backgroundcolor=\color{snow},
-    numbers=left, numberstyle=\footnotesize\color{halfgray}\ttfamily, xleftmargin=1.5em, basicstyle=\ttfamily\small
+    numbers=left, numberstyle=\footnotesize\color{halfgray}\ttfamily, xleftmargin=1.5em, basicstyle=\ttfamily\small,
+    inputpath=sources/,
+    title=\footnotesize\ttfamily\lstname, captionpos=b
 }
-
-
 
 \begin{document}
 
@@ -54,20 +52,18 @@
 
 \clearpage
 
-\section{Il perido frazionario}
-\textbf{Definizione} Il \textit{periodo frazionario minimo} di una stringa $s$ è il più piccolo intero $p>0$ che soddisfa la seguente
-proprietà:
+\section{Il periodo frazionario}
+\textbf{Definizione} Il \textit{periodo frazionario minimo} di una stringa $s$ è il più piccolo intero $p>0$ che soddisfa la proprietà
 \begin{equation}
 s(i) = s(i+p)\qquad \forall i = 1, \dots , (n-p) \tag{$\star$}
 \end{equation}
+dove $n$ denota la lunghezza e $s(k)$ \`e il $k$-esimo carattere della stringa $s$.
 
-dove $n$ denota la lunghezza e $s(k)$ \`e il $k$-esimo carattere della stringa $s$.\\
-\\
-\textbf{Esempio} Il \emph{periodo frazionario minimo} della stringa \texttt{abcabcab} è 3, mentre il \emph{periodo frazionario minimo} della stringa \texttt{aba} è 2.\\
-\\
-Si implementano di seguito due algoritmi scritti in linguaggio Python3 per il calcolo del \emph{periodo frazionario minimo} di una qualsiasi stringa.\\
+\textbf{Esempio} Il \emph{periodo frazionario minimo} della stringa \texttt{abcabcab} è 3, mentre il \emph{periodo frazionario minimo} della stringa \texttt{aba} è 2.
+
+Si implementano di seguito due algoritmi scritti in linguaggio Python3 per il calcolo del \emph{periodo frazionario minimo} di una qualsiasi stringa.
+
 In particolare, l'algoritmo \textit{PeriodNa{\"i}ve} con complessità $O(n^2)$, e l'algoritmo \textit{PeriodSmart} con complessità $\Theta(n)$.
-
 
 
 \section{Algoritmo \textit{PeriodNa{\"i}ve}}
@@ -76,24 +72,25 @@ In particolare, l'algoritmo \textit{PeriodNa{\"i}ve} con complessità $O(n^2)$, 
 L'algoritmo utilizza un ciclo \texttt{for}  con un intero $p$ che varia da 1 a $n$ e termina restituendo $p$ alla prima iterazione che soddisfa la proprietà ($\star$). Quest'ultima viene verificata confrontando la congruenza tra il prefisso della stringa $s$ fino alla posizione $n-p$, e il suffisso dalla posizione $p$ fino al termine della stringa. Nel caso in cui queste parti combacino, la dimensione $p$ è esattamente il \textit{periodo frazionario minimo} cercato.
 
 \subsection{Codice dell'algoritmo}  
-\lstinputlisting[language=Python,firstline=1,lastline=13]{sources/PeriodNaive.py} 
+\lstinputlisting[language=Python,linerange={1-13}]{PeriodNaive.py} 
 
 \subsubsection{Osservazioni sul codice}
 
-Alternativamente al controllo della congruenza tra il prefisso $[1 \dots n-p]$ e suffisso $[p \dots n]$, la funzione \textit{isPeriod} potrebbe venire implementata anche con un ciclo secondario per il controllo dell'uguaglianza tra $s(j)$ e $s(j+p)$, con $j$ che varia da $1$ a $n-p$.\\
+Alternativamente al controllo della congruenza tra il prefisso $[1 \dots n-p]$ e suffisso $[p \dots n]$, la funzione \textit{isPeriod} potrebbe venire implementata anche con un ciclo secondario per il controllo dell'uguaglianza tra $s(j)$ e $s(j+p)$, con $j$ che varia da $1$ a $n-p$.
 Tale implementazione sarebbe stata scritta così:
-\lstinputlisting[language=Python,firstline=17,lastline=24]{sources/PeriodNaive.py} 
+\lstinputlisting[language=Python,linerange={17-24}]{PeriodNaive.py} 
+
 Il motivo per cui non è stata scelta questa implementazione è che nel caso di un generico input $s$, il ciclo interno si sarebbe fermato alla prima disuguaglianza trovata. Questo avrebbe di certo ottimizzato l'algoritmo in pratica, ma avrebbe reso più difficile un confronto generale tra questo algoritmo e la versione \textit{smart} illustrata di seguito, che ha un andamento lineare sulla dimensione dell'input.
 
 
 \section{Algoritmo \textit{PeriodSmart}}
 
 \subsection{Descrizione dell'algoritmo}
-\textbf{Definizione} Un \textit{bordo} di una stringa $s$ è una qualunque stringa $t$ che sia, allo stesso tempo, prefisso proprio di $s$ e suffisso proprio di $s$.\\
-\\
-Si osserva che $p$ è un periodo frazionario di $s$ se e solo se $s = |p|-r$, dove $r$ è la lunghezza di un bordo di $s$. Ciò permette di ridurre il problema del calcolo del periodo frazionario minimo di $s$ al problema del calcolo della lunghezza massima di un bordo di $s$.\\ 
-\\
-Per risolvere quest'ultimo problema si procede per induzione, calcolando per ogni prefisso $s[1,\dots,i]$, dal più corto al più lungo, la lunghezza $r(i)$ del bordo massimo di $s[1,\dots,i]$.\\
+\textbf{Definizione} Un \textit{bordo} di una stringa $s$ è una qualunque stringa $t$ che sia, allo stesso tempo, prefisso proprio di $s$ e suffisso proprio di $s$.
+
+Si osserva che $p$ è un periodo frazionario di $s$ se e solo se $s = |p|-r$, dove $r$ è la lunghezza di un bordo di $s$. Ciò permette di ridurre il problema del calcolo del periodo frazionario minimo di $s$ al problema del calcolo della lunghezza massima di un bordo di $s$.
+
+Per risolvere quest'ultimo problema si procede per induzione, calcolando per ogni prefisso $s[1,\dots,i]$, dal più corto al più lungo, la lunghezza $r(i)$ del bordo massimo di $s[1,\dots,i]$.
 Per implementare il passo induttivo da $i$ a $i+1$ si consideri la sequenza
 \begin{equation*}
 r(i)>r(r(i))>r(r(r(i)))>\dots>r^{k}(i)=0
@@ -105,18 +102,18 @@ e si osserva che nel calcolo di $r(i+1)$ solamente i due casi seguenti possono d
 \end{itemize}
 
 \subsection{Codice dell'algoritmo}
-\lstinputlisting[language=Python]{sources/PeriodSmart.py} 
-
-
+\lstinputlisting[language=Python]{PeriodSmart.py} 
 
 \section{Calcolo dei tempi di esecuzione dei due algoritmi}
-Si vogliono misurare i tempi medi di esecuzione dei due algoritmi \hyperlink{section.2}{\textit{PeriodNa{\"i}ve}} e \hyperlink{section.3}{\textit{PeriodSmart}} al variare della lunghezza $n$ della stringa fornita in input.\\
+Si vogliono misurare i tempi medi di esecuzione dei due algoritmi \hyperlink{section.2}{\textit{PeriodNa{\"i}ve}} e \hyperlink{section.3}{\textit{PeriodSmart}} al variare della lunghezza $n$ della stringa fornita in input.
 
 \subsection{Calcolo della precisione del sistema}
-La precisione della misurazione sperimentale è data dal più piccolo intervallo di tempo che il nostro computer può misurare.\\
-Possiamo stimare la risoluzione del \textit{clock} di sistema utilizzando un ciclo \texttt{while} per calcolare l'intervallo minimo di tempo misurabile.\\
+La precisione della misurazione sperimentale è data dal più piccolo intervallo di tempo che il nostro computer può misurare.
+
+Possiamo stimare la risoluzione del \textit{clock} di sistema utilizzando un ciclo \texttt{while} per calcolare l'intervallo minimo di tempo misurabile.
+
 Successivamente si calcola il \textit{tempo minimo ammissibile} in funzione della risoluzione stimata e dell'errore relativo ammissibile (pari, nel nostro caso, a $0.001$).
-\lstinputlisting[language=Python,firstline=8,lastline=20]{sources/Complexity.py}
+\lstinputlisting[language=Python,linerange={8-20}]{Complexity.py}
 Il \textit{tempo minimo ammissibile}, nel calcolatore utilizzato, è di \texttt{0.0009546279907226562} secondi.
 
 \subsection{Generazione dell'\textit{array} delle dimensioni degli input}
@@ -125,8 +122,8 @@ Si definisce un \textit{array} \texttt{sizes} di lunghezze $n$ dell'input con di
 \bigl\lfloor A \cdot B^i \bigl\rfloor = 1000 \quad \text{se} \quad i = 0 \qquad \Rightarrow \qquad \bigl\lfloor A \cdot 1 \bigl\rfloor = 1000 \qquad \Rightarrow \qquad A = 1000\\
 \bigl\lfloor 1000 \cdot B^i \bigl\rfloor = 500000 \quad \text{se} \quad i = 99 \qquad \Rightarrow \qquad \bigl\lfloor B^{99} \bigl\rfloor = 500 \qquad \Rightarrow \qquad B = \sqrt[99]{500}
 \end{gather*}
-\lstinputlisting[language=Python,firstline=24,lastline=27]{sources/Complexity.py}
-\lstinputlisting[language=Python,firstline=10,lastline=18]{sources/InputGenerator.py}
+\lstinputlisting[language=Python,linerange={24-27}]{Complexity.py}
+\lstinputlisting[language=Python,linerange={10-18}]{InputGenerator.py}
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -149,16 +146,17 @@ Si definisce un \textit{array} \texttt{sizes} di lunghezze $n$ dell'input con di
 \end{center}
 
 \subsection{Generazione dell'\textit{array} degli input}
-Sono stati implementati diverse procedure per la generazione delle stringhe da utilizzare come input nel calcolo dei tempi di esecuzione degli algoritmi.\\
-Dopo attente analisi e sperimentazioni, si è deciso di utilizzare la procedura \textit{Random3}, descritta di seguito.\\
+Sono stati implementati diverse procedure per la generazione delle stringhe da utilizzare come input nel calcolo dei tempi di esecuzione degli algoritmi.
+
+Dopo attente analisi e sperimentazioni, si è deciso di utilizzare la procedura \textit{Random3}, descritta di seguito.
+
 La stringa $s$ di lunghezza $n$ viene generata su un alfabeto ternario \texttt{\{a,b,c\}} in modo che ogni lettera $s(i)$ della stringa sia generata in modo pseudo-casuale indipendentemente dalle altre fino alla posizione $q-1$, parametro scelto randomicamente nell'intervallo $[1,n]$. Ad $s(q)$ viene assegnato il carattere ``\texttt{d}'', mentre per le lettere rimanenti si procede assegnando a $s(i)$ il valore di $s( (i-1) \mod q )$.
-\lstinputlisting[language=Python,firstline=3,lastline=8]{sources/InputGenerator.py}
-\lstinputlisting[language=Python,firstline=37,lastline=46]{sources/InputGenerator.py}
+\lstinputlisting[language=Python,linerange={3-8,36-46}]{InputGenerator.py}
 Con questa implementazione, ci si aspetta che il risultato degli algoritmi coincida con la posizione del carattere ``\texttt{d}'', ovvero con il parametro \textit{q}.
 
 \subsection{Calcolo del tempo medio}
 Vengono salvati in due array \texttt{growth\_PN} e \texttt{growth\_PS} rispettivamente i tempi di esecuzione dell'algoritmo \hyperlink{section.2}{\textit{PeriodNa{\"i}ve}} e \hyperlink{section.3}{\textit{PeriodSmart}} al variare della lunghezza $n$ della stringa fornita in input, seguendo la distribuzione indicata dall'array \texttt{strings} calcolata \hyperlink{subsection.4.3}{in precedenza}.
-\lstinputlisting[language=Python,firstline=34,lastline=62]{sources/Complexity.py}
+\lstinputlisting[language=Python,linerange={34-62}]{Complexity.py}
 
 \subsection{Risultati della sperimentazione}
 
@@ -248,7 +246,8 @@ Visualizzando i risultati dei tempi di esecuzione con le rispettive lunghezze de
 \end{tikzpicture}
 \end{center}
 
-Entrambi i grafici confermano l'andamento lineare dell'algoritmo \textit{PeriodSmart} al variare della dimensione dell'input.\\
+Entrambi i grafici confermano l'andamento lineare dell'algoritmo \textit{PeriodSmart} al variare della dimensione dell'input.
+
 Per quanto riguarda l'algoritmo \textit{PeriodNa{\"i}ve}, invece, i tempi di esecuzione sono molto più legati all'input: avendo inserito anche il risultato degli algoritmi, possiamo notare come un risultato molto inferiore alla dimensione dell'input coincida con un tempo di esecuzione molto ridotto. Al contrario, a risultati molto vicini alla dimensione dell'input coincide un tempo di esecuzione molto superiore. In generale, si può affermare dai grafici che la complessità di \textit{PeriodNa{\"i}ve} sia nell'ordine di $n^2$ nel caso peggiore, ovvero una complessità complessiva di $O(n^2)$.
 
 
@@ -258,7 +257,7 @@ Per quanto riguarda l'algoritmo \textit{PeriodNa{\"i}ve}, invece, i tempi di ese
 
 \subsubsection{Ideazione dell'input}
 Ritorniamo sul primo algoritmo proposto in questo studio
-\lstinputlisting[language=Python,firstline=1,lastline=13]{sources/PeriodNaive.py} 
+\lstinputlisting[language=Python,linerange={1-13}]{PeriodNaive.py} 
 e ci chiediamo come debba essere formato un input che funga da caso pessimo.
 
 Notiamo che il codice principale è composto da un ciclo \texttt{for} con indice $p$ varia da 1 alla lunghezza dell'input, ma termina se la porzione della stringa dall'inizio fino alla posizione $p$ è un periodo frazionario minimo. Dunque, per massimizzare i tempi di esecuzione, dobbiamo massimizzare la posizione $p$ che rende vero il controllo citato.
@@ -270,7 +269,7 @@ t(i) = i*\texttt{a} + i*\texttt{b} + i*\texttt{c}
 dove $i*\texttt{n}$ indica il carattere \texttt{n} ripetuto $i$ volte.
 La stringa $s$ così formata, viene troncata se necessario al raggiungimento del $n$-esimo carattere.
 
-Un esempi di stringa formata in questo modo è:
+\textbf{Esempi} Un esempio di stringa formata in questo modo è:
 \begin{equation*}
 s(30) = \underbrace{\texttt{abc}}_{t(1)} \underbrace{\texttt{aabbcc}}_{t(2)} \underbrace{\texttt{aaabbbccc}}_{t(3)} \underbrace{\texttt{aaaabbbbcccc}}_{t(4)},
 \end{equation*}
