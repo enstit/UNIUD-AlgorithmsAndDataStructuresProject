@@ -9,5 +9,4 @@ def PeriodSmart(s):
         if (s[i] == s[j]):
             j += 1
         pf.append(j)
-    maxValue = pf[n-1]
-    return n - maxValue
+    return n - pf[n-1]
