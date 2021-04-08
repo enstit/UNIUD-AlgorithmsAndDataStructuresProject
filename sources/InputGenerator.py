@@ -30,7 +30,7 @@ def _StringGenerator_2(size):
     q = random.randint(1, size)
     s = (''.join(random.choices(['a', 'b', 'c'], k=q)))
     for i in range(q+1, size+1):
-        s = s + s[((i-1)%q +1)]
+        s = s + s[((i-1)%q)]
     return s
 
 # Create a string of size 'size' using the same
