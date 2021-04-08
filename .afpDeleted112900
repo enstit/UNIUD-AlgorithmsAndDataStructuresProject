@@ -283,7 +283,7 @@ s(40) = \underbrace{\texttt{abc}}_{t(1)} \underbrace{\texttt{aabbcc}}_{t(2)} \un
 
 \subsubsection{Risultati della sperimentazione}
 
-Effettuando la sperimentazione con la stessa procedura descritta in precedenza, ma utilizzando la procedura \textit{\_StringGenerator\_4} per la generazione delle stringhe, si ottiene un grafico con andamento quadratico.
+Effettuando la sperimentazione con la stessa procedura descritta in precedenza, ma utilizzando la procedura \textit{\_StringGenerator\_4} per la generazione delle stringhe
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]

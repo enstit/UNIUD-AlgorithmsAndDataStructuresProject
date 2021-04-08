@@ -32,6 +32,19 @@
 \definecolor{cyan}{RGB}{64, 128, 128}
 \definecolor{folly}{rgb}{1.0, 0.0, 0.31}
 
+\makeatletter
+\DeclareRobustCommand{\getlstname}{%
+ \begingroup
+  % \lstname seems to change hyphens into \textendash
+  \def\textendash{-}%
+  \filename@parse{\lstname}%
+  \edef\filename@base{\detokenize\expandafter{\filename@base}}%
+  \texttt{\filename@base.\filename@ext}%
+ \endgroup
+}
+\makeatother
+
+
 \lstdefinelanguage{python}{
 	morekeywords={and,assert,break,def,elif,else,for,from,global,if,import,as,in,is,lambda,not,or,pass,print,return,try,while},
 	morekeywords=[2]{abs,all,any,bool,chr,dict,dir,divmod,enumerate,eval,file,filter,float,format,globals,help,id,
@@ -41,7 +54,7 @@
     frame=single, framexleftmargin=2em, backgroundcolor=\color{snow},
     numbers=left, numberstyle=\footnotesize\color{halfgray}\ttfamily, xleftmargin=1.5em, basicstyle=\ttfamily\small,
     inputpath=sources/,
-    title=\footnotesize\ttfamily\lstname, captionpos=b
+    title=\footnotesize\ttfamily\getlstname, captionpos=b
 }
 
 \begin{document}
@@ -283,7 +296,7 @@ s(40) = \underbrace{\texttt{abc}}_{t(1)} \underbrace{\texttt{aabbcc}}_{t(2)} \un
 
 \subsubsection{Risultati della sperimentazione}
 
-Effettuando la sperimentazione con la stessa procedura descritta in precedenza, ma utilizzando la procedura \textit{\_StringGenerator\_4} per la generazione delle stringhe, si ottiene un grafico con andamento quadratico.
+Effettuando la sperimentazione con la stessa procedura descritta in precedenza, ma utilizzando la procedura \textit{\_StringGenerator\_4} per la generazione delle stringhe
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]

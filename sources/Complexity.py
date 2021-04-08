@@ -75,14 +75,20 @@ with open('results.csv', 'w', newline='') as file:
 
 ############################################################
 
-# plt.figure(figsize=(10, 6))
-# plt.plot(sizes, growth_PN, linestyle='-', marker='.', label = "PeriodNaive")
-# plt.plot(sizes, growth_PS, linestyle='-', marker='.', label = "PeriodSmart")
-# plt.title('Average timings for random inputs')
-# plt.xlabel('Input size')
-# plt.xscale('linear') # 'linear'|'log'
-# plt.xlim(FIRST_SIZE,LAST_SIZE) 
-# plt.ylabel('Timing') 
-# plt.yscale('linear') # 'linear'|'log'
-# plt.legend() 
-# plt.show()
+sizes = []
+a = FIRST_SIZE
+b = (LAST_SIZE/FIRST_SIZE)**(float(1/(RANGE-1)))
+for i in range(RANGE):
+    sizes.append(int(a*(b**i)))
+
+plt.figure(figsize=(10, 6))
+plt.plot(sizes, growth_PN, linestyle='-', marker='.', label = "PeriodNaive")
+plt.plot(sizes, growth_PS, linestyle='-', marker='.', label = "PeriodSmart")
+plt.title('Average timings for random inputs')
+plt.xlabel('Input size')
+plt.xscale('linear') # 'linear'|'log'
+plt.xlim(FIRST_SIZE,LAST_SIZE) 
+plt.ylabel('Timing') 
+plt.yscale('linear') # 'linear'|'log'
+plt.legend() 
+plt.show()
