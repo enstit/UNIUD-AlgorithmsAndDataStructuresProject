@@ -8,7 +8,7 @@ class Node():
 
 def bst_insert(root, value, str_name):
     """
-    insert a key int a tree
+    insert a key value in a tree
     :param root: Node object that represent the root of the tree
     :param value: an integer representing the value to insert
     :param str_name: a string corresponding to the literal format of the value
