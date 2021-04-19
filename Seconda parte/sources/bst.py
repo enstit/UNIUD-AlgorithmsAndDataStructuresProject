@@ -43,7 +43,7 @@ def bst_find(root, value):
     return bst_find(root.left, value)
 
 
-def show(root):
+def bst_show(root):
     """
     print the tree in a preorder visit
     :param root: Node object that represent the root of the tree
@@ -54,8 +54,8 @@ def show(root):
             print("NULL", end=" ")
         if (root.right is None):
             print("NULL", end=" ")
-        show(root.left)
-        show(root.right)
+        bst_show(root.left)
+        bst_show(root.right)
 
 
 def inorder_visit(root):
