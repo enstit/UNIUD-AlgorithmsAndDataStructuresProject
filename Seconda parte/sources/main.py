@@ -1,4 +1,5 @@
 from bst import *
+from avl import *
 """
 INPUT OPERATION:
     - insert 'key value' 'literal key value'
@@ -6,7 +7,7 @@ INPUT OPERATION:
     - show 
     - exit
 
-Example of use:
+Example of use (out for BST):
 in:     insert 1 one
 in:     insert 3 three
 in:     insert 2 two
@@ -16,7 +17,8 @@ in:     find 2
 out:    two
 in:     exit
 """
-TREE_TYPE = "BST"  # "AVL" | "RBT"
+
+TREE_TYPE = "AVL"  # "BST" | "AVL" | "RBT"
 t = None
 
 in_value = input()
@@ -27,14 +29,21 @@ while(in_value[0] != "exit"):
     if(in_value[0] == "insert"):
         if(TREE_TYPE == "BST"):
             t = bst_insert(t, int(in_value[1]), in_value[2])
+        elif(TREE_TYPE == "AVL"):
+            t = avl_insert(t, int(in_value[1]), in_value[2])
 
     if(in_value[0] == "find"):
-        if (TREE_TYPE == "BST"):
+        if(TREE_TYPE == "BST"):
             bst_find(t, int(in_value[1]))
+        elif(TREE_TYPE == "AVL"):
+            avl_find(t, int(in_value[1]))
 
     if(in_value[0] == "show"):
-        if (TREE_TYPE == "BST"):
+        if(TREE_TYPE == "BST"):
             bst_show(t)
+            print()
+        elif(TREE_TYPE == "AVL"):
+            avl_show(t)
             print()
 
     in_value = input()
