@@ -1,5 +1,21 @@
 from bst import *
+"""
+INPUT OPERATION:
+    - insert 'key value' 'literal key value'
+    - find 'key value'
+    - show 
+    - exit
 
+Example of use:
+in:     insert 1 one
+in:     insert 3 three
+in:     insert 2 two
+in:     show
+out:    1:one NULL 3:three NULL 2:two NULL NULL
+in:     find 2 
+out:    two
+in:     exit
+"""
 t = None
 
 in_value = input()

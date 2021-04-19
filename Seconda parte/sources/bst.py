@@ -7,6 +7,13 @@ class Node():
 
 
 def bst_insert(root, value, str_name):
+    """
+    insert a key int a tree
+    :param root: Node object that represent the root of the tree
+    :param value: an integer representing the value to insert
+    :param str_name: a string corresponding to the literal format of the value
+    :return:
+    """
     if root is None:
         return Node(value, str_name)
 
@@ -19,6 +26,11 @@ def bst_insert(root, value, str_name):
 
 
 def bst_find(root, value):
+    """
+    print the found value in a literal format
+    :param root: Node object that represent the root of the tree
+    :param value: an integer representing the value to find
+    """
     if root is None:
         return
 
@@ -32,6 +44,10 @@ def bst_find(root, value):
 
 
 def show(root):
+    """
+    print the tree in a preorder visit
+    :param root: Node object that represent the root of the tree
+    """
     if root:
         print(str(root.key) + ":" + root.name, end=" ")
         if (root.left is None):
