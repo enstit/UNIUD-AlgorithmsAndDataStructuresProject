@@ -1,0 +1,5 @@
+I file in questa cartella rappresentano i programmi da caricare su e-learning e compatibili
+con Python2. (le differenze stanno nelle funzioni di print e di input):
+
+- print("Hi", end=" ") ---> print "Hi",
+- input() --> raw_input()
