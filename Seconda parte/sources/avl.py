@@ -55,12 +55,10 @@ def avl_show(root):
     """
     if root:
         print(str(root.key) + ":" + root.name + ":" + str(root.height), end=" ")
-        if (root.left is None):
-            print("NULL", end=" ")
-        if (root.right is None):
-            print("NULL", end=" ")
         avl_show(root.left)
         avl_show(root.right)
+    else:
+        print("NULL", end=" ")
 
 
 def avl_find(root, value):

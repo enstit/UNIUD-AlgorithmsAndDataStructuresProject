@@ -50,12 +50,10 @@ def bst_show(root):
     """
     if root:
         print(str(root.key) + ":" + root.name, end=" ")
-        if (root.left is None):
-            print("NULL", end=" ")
-        if (root.right is None):
-            print("NULL", end=" ")
         bst_show(root.left)
         bst_show(root.right)
+    else:
+        print("NULL", end=" ")
 
 
 def inorder_visit(root):
