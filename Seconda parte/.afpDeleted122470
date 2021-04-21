@@ -107,16 +107,32 @@ Questa struttura dati ha alcuni difetti \dots
 \subsection{Definizione di Albero \textit{AVL}}  
 Un \textit{albero AVL} $T$ è un \textit{BST} ($\star$), in cui vale la seguente proprietà:
 \begin{equation}
-	\forall x \in T \rightarrow | h(left(x)) - h(right(x)) | \leq 1	 \tag{$\ast$}
+	\forall x \in T,\; | h(left(x)) - h(right(x)) | \leq 1	 \tag{$\ast$}
 \end{equation}
-dove $h(k)$ indica il valore dell'altezza dell'albero radicato in $k$, e $left(B)$ (rispettivamente $right(B)$) indica il sottoalbero sinistro (rispettivamente destro) di $B$.
+dove $k.key$ indica il valore della chiave di $k$, e $left(B)$ (rispettivamente $right(B)$) indica il sottoalbero sinistro (rispettivamente destro) di $B$.
 \\
 
 \textbf{Esempio} Un BST in cui ogni nodo contiene una chiave numerica tra $\{1,5,6,10\}$ e un campo alfanumerico di tipo stringa, è il seguente:
 \begin{center}
 \begin{forest}
-for tree={forest node}
-	[6\nodepart{lower}six
+for tree={forest node,
+curl/.style n args=5{
+    tikz+={
+      \node (n) [fit to=#1, inner sep=0pt] {};
+      \draw [decorate, decoration={brace, amplitude=10pt, #3}] (n.north #2) -- (n.south #2) node [midway, #4] {#5};
+    }
+  },
+  curl left/.style={
+    delay={
+      curl/.process={OOw2 {curl label}{curl mirror}{ {#1}{west}{##2}{left, xshift=-10pt}{##1}}  }
+    },
+  },
+  curl right/.style={
+    delay={
+      curl/.process={OOw2 {curl label}{curl mirror}{ {#1}{east}{##2}{right, xshift=10pt}{##1}}  }
+    }}
+}
+	[6\nodepart{lower}six, curl left=cur, curl label=Section foo, mirror curl
   		[5\nodepart{lower}five
     		[1\nodepart{lower}one]
     		[,phantom]
@@ -124,8 +140,7 @@ for tree={forest node}
   		[10\nodepart{lower}ten]
 	]
 \end{forest}
-\end{center},
-dove $left(T)$ ha altezza 3, mentre $right(T)$ ha altezza 2.
+\end{center}
 
 \subsection{Implementazione della struttura dati}  
 \lstinputlisting[language=Python,linerange={1-79}]{avl.py} 

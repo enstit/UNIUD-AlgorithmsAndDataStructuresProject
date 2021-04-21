@@ -52,8 +52,7 @@
 
   \tikzset{%
     /forest,
-    forest node/.style={rectangle split,rectangle split horizontal,
-    rectangle split parts=4,draw, text width=1.75em, text centered, l sep+=.25cm,s sep+=.25cm},
+    forest node/.style={rectangle split,rectangle split parts=2,draw, text width=3em, text centered, l sep+=.25cm,s sep+=.25cm},
     b/.append style={draw=black, very thick},
     r/.append style={draw=red, very thick}
   }
@@ -67,16 +66,23 @@
 \clearpage
 
 \section{Alberi binari di ricerca}
+Un \textit{albero binario di ricerca} (o BST) $T$ è una struttura dati ad albero, in cui valgono le seguenti proprietà:
+\begin{equation}
+\begin{split}
+	\forall x \in T,\; \forall y \in left(T) \rightarrow y.key < x.key	 \\
+	\forall x \in T,\; \forall z \in right(T) \rightarrow z.key > x.key
+\end{split}
+\end{equation}
 
 \begin{center}
 \begin{forest}
 for tree={forest node}
-	[$9$\nodepart{two}$\dots$\nodepart{three}$\bullet$\nodepart{four}$\bullet$
-  		[5\nodepart{two}$\dots$\nodepart{three}$\bullet$\nodepart{four}\NUL
-    		[1\nodepart{two}$\dots$\nodepart{three}$\NA$\nodepart{four}$\NA$]
+	[9\nodepart{two}$nine$
+  		[5\nodepart{two}$five$
+    		[1\nodepart{two}$one$]
     		[,phantom]
   		]
-  		[12\nodepart{two}$\dots$\nodepart{three}$\NA$\nodepart{four}$-$]
+  		[10\nodepart{two}$ten$]
 	]
 \end{forest}
 \end{center}
@@ -84,14 +90,14 @@ for tree={forest node}
 \begin{center}
 \begin{forest}
 for tree={forest node}
-      [8\nodepart{two}$\dots$\nodepart{three}$\bullet$\nodepart{four}$\bullet$, b
-        [5\nodepart{two}\dots, b
-          [4\nodepart{two}\dots, r]
-          [7\nodepart{two}\dots, r]
+      [8\nodepart{two}$eight$, b
+        [5\nodepart{two}$five$, b
+          [4\nodepart{two}$four$, r]
+          [7\nodepart{two}$seven$, r]
         ]
-        [11\nodepart{two}\dots, r,
-          [9\nodepart{two}\dots, b]
-          [13\nodepart{two}\dots, b]
+        [11\nodepart{two}$eleven$, r,
+          [9\nodepart{two}$nine$, b]
+          [12\nodepart{two}$twelve$, b]
         ]
       ]
  \end{forest}
