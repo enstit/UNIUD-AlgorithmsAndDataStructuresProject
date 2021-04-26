@@ -44,16 +44,17 @@
 	morestring=[b]", morestring=[b]', stringstyle=\color{folly}, showstringspaces=false, upquote=true,
     morecomment=[l]\#, commentstyle=\color{cyan},
     frame=single, framexleftmargin=2em, backgroundcolor=\color{snow},
-    numbers=left, numberstyle=\footnotesize\color{halfgray}\ttfamily, xleftmargin=1.5em, basicstyle=\ttfamily\small,
+    numbers=left, numberstyle=\scriptsize\color{halfgray}\ttfamily, xleftmargin=1.5em,
     inputpath=sources/,
-    title=\footnotesize\ttfamily\lstname, captionpos=b
+    title=\footnotesize\ttfamily\lstname, captionpos=b,
+    basicstyle=\ttfamily\small
 }
 
 \begin{document}
 
   \tikzset{%
     /forest,
-    forest node/.style={circle split,draw, text width=1.75em, text centered},
+    forest node/.style={circle split,draw, text width=1.75em, text centered,s sep+=1.5cm,l sep-=.5cm, font=\footnotesize},
 %    forest node/.style={rectangle split,rectangle split parts=2,draw, text width=3em, text centered, l sep+=.25cm,s sep+=.25cm},
     b/.append style={draw=black, very thick},
     r/.append style={draw=red, very thick}
@@ -77,22 +78,32 @@ Un \textit{albero binario di ricerca} (o BST) $T$ è una struttura dati ad alber
 	\forall x \in T,\; \forall z \in right(T) \rightarrow z.key > x.key
 \end{split}  \tag{$\star$}
 \end{equation}
-dove $k.key$ indica il valore della chiave di $k$, e $left(B)$ (rispettivamente $right(B)$) indica il sottoalbero sinistro (rispettivamente destro) di $B$.
+dove $k.key$ indica il valore della chiave di $k$, e $left(B)$ (rispettivamente $right(B)$) indica il sotto-albero sinistro (rispettivamente destro) di $B$.
 \\
 
-\textbf{Esempio} Un BST in cui ogni nodo contiene una chiave numerica tra $\{1,5,6,10\}$ e un campo alfanumerico di tipo stringa, è il seguente:
+\textbf{Esempio} Un \textit{BST} in cui ogni nodo contiene una chiave numerica tra $\{1,2,3,4,5,6,10\}$ e un campo alfanumerico di tipo stringa, è il seguente:
 \begin{center}
 \begin{forest}
 for tree={forest node}
 	[6\nodepart{lower}six
   		[5\nodepart{lower}five
-    		[1\nodepart{lower}one]
+    		[1\nodepart{lower}one
+				[,phantom]
+				[2\nodepart{lower}two
+					[,phantom]
+					[4\nodepart{lower}four
+						[3\nodepart{lower}three]
+						[,phantom]
+					]
+				]
+			]
     		[,phantom]
   		]
   		[10\nodepart{lower}ten]
 	]
 \end{forest}
 \end{center}
+Bisogna notare che non è l'unico \textit{BST} costruibile partendo dallo stesso insieme di chiavi. Un'alternativa, per esempio, potrebbe essere stata quella di utilizzare il valore minore come chiave per la radice dell'albero, e attaccare in ordine crescente le altre chiavi, ognuna come figlio destro del nodo precedente.
 
 \subsection{Implementazione della struttura dati}  
 \lstinputlisting[language=Python,linerange={1-56}]{bst.py} 
@@ -109,23 +120,29 @@ Un \textit{albero AVL} $T$ è un \textit{BST} ($\star$), in cui vale la seguente
 \begin{equation}
 	\forall x \in T \rightarrow | h(left(x)) - h(right(x)) | \leq 1	 \tag{$\ast$}
 \end{equation}
-dove $h(k)$ indica il valore dell'altezza dell'albero radicato in $k$, e $left(B)$ (rispettivamente $right(B)$) indica il sottoalbero sinistro (rispettivamente destro) di $B$.
+dove $h(k)$ indica il valore dell'altezza dell'albero radicato in $k$, e $left(B)$ (rispettivamente $right(B)$) indica il sotto-albero sinistro (rispettivamente destro) di $B$.
 \\
 
-\textbf{Esempio} Un BST in cui ogni nodo contiene una chiave numerica tra $\{1,5,6,10\}$ e un campo alfanumerico di tipo stringa, è il seguente:
+\textbf{Esempio} Un Albero \textit{AVL} in cui ogni nodo contiene una chiave numerica tra $\{1,2,3,4,5,6,9,10\}$ e un campo alfanumerico di tipo stringa, è il seguente:
 \begin{center}
 \begin{forest}
 for tree={forest node}
-	[6\nodepart{lower}six
-  		[5\nodepart{lower}five
+	[4\nodepart{lower}four
+  		[2\nodepart{lower}two
     		[1\nodepart{lower}one]
-    		[,phantom]
+    		[3\nodepart{lower}three]
   		]
-  		[10\nodepart{lower}ten]
+  		[6\nodepart{lower}six
+    		[5\nodepart{lower}five]
+    		[10\nodepart{lower}ten
+				[9\nodepart{lower}nine]
+				[,phantom]
+			]
+  		]
 	]
 \end{forest}
 \end{center},
-dove $left(T)$ ha altezza 3, mentre $right(T)$ ha altezza 2.
+dove, ad esempio, $left(\texttt{root})$ ha altezza 2, mentre $right(\texttt{root})$ ha altezza 3.
 
 \subsection{Implementazione della struttura dati}  
 \lstinputlisting[language=Python,linerange={1-79}]{avl.py} 
@@ -137,11 +154,12 @@ Questa struttura dati migliora alcuni aspetti dei \textit{BST} \dots
 
 \section{Alberi binari di ricerca di tipo Red-Black}
 
-\subsection{Definizione di Albero \textit{AVL}}  
-Un \textit{albero di tipo Red-Black} (o \textit{RB Tree}) $T$ è un \textit{BST} ($\star$), in cui vale la seguente proprietà:
+\subsection{Definizione di \textit{RB Tree}}  
+Un \textit{albero di tipo Red-Black} (o \textit{RB Tree}) $T$ è un \textit{BST} ($\star$), in cui ogni nodo ha associato un campo "colore", che può assumere valore \textit{rosso} o \textit{nero}, ed inoltre vale che:
 \begin{equation}
-	\dots	 \tag{$\bullet$}
+		\forall x \in T \rightarrow h_b(left(x)) = h_b(right(x))	 \tag{$\bullet$}
 \end{equation}
+dove $h_b(x)$ indica l'altezza nera dell'albero radicato in $x$, ovvero il massimo numero di nodi neri lungo un possibile cammino da $x$ a una foglia.
 \\
 
 \textbf{Esempio}

@@ -120,7 +120,8 @@ class RedBlackTree():
 def rbt_show(root):
     """
     print the tree in a preorder visit
-    :param root: RBTNode object that represent the root of the tree (accessed by t.root in the calling)
+    :param root: RBTNode object that represents
+        the root of the tree (accessed by t.root in the calling)
     """
     if root.key is None:
         print("NULL", end=" ")
@@ -139,7 +140,8 @@ def rbt_show(root):
 def rbt_find(root, value):
     """
     print the found value in a literal format
-    :param root: RBTNode object that represent the root of the tree (accessed by t.root in the calling)
+    :param root: RBTNode object that represents
+        the root of the tree (accessed by t.root in the calling)
     :param value: an integer representing the value to find
     """
     if root.key is None:
