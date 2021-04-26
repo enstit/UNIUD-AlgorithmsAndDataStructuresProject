@@ -53,7 +53,11 @@ def bst_show(root):
         the root of the tree
     """
     if root:
-        print(str(root.key) + ":" + root.name, end=" ")
+        print(
+            str(root.key), root.name,
+            sep=":",
+            end=" "
+            )
         bst_show(root.left)
         bst_show(root.right)
     else:

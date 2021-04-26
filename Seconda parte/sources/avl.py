@@ -25,7 +25,7 @@ def avl_insert(root, value, str_name):
     else:
         root.right = avl_insert(root.right, value, str_name)
 
-    root.height = 1 + max(getHeight(root.left), getHeight(root.right))
+    root.height=1+max(getHeight(root.left),getHeight(root.right))
 
     balance = getBalance(root)
 
@@ -57,7 +57,11 @@ def avl_show(root):
         the root of the tree
     """
     if root:
-        print(str(root.key) + ":" + root.name + ":" + str(root.height), end=" ")
+        print(
+            str(root.key), root.name, str(root.height),
+            sep=":",
+            end=" "
+            )
         avl_show(root.left)
         avl_show(root.right)
     else:

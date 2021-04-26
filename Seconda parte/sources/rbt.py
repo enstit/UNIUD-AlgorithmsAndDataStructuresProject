@@ -130,7 +130,11 @@ def rbt_show(root):
         print("NULL", end=" ")
         return
     if root:
-        print(str(root.key) + ":" + root.name + ":" + str(root.color), end=" ")
+        print(
+            str(root.key), root.name, str(root.color),
+            sep=":",
+            end=" "
+            )       
         rbt_show(root.left)
         rbt_show(root.right)
     else:

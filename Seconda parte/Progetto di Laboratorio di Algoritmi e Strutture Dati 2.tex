@@ -81,7 +81,7 @@ Un \textit{albero binario di ricerca} (o BST) $T$ è una struttura dati ad alber
 dove $k.key$ indica il valore della chiave di $k$, e $left(B)$ (rispettivamente $right(B)$) indica il sotto-albero sinistro (rispettivamente destro) di $B$.
 \\
 
-\textbf{Esempio} Un \textit{BST} in cui ogni nodo contiene una chiave numerica tra $\{1,2,3,4,5,6,10\}$ e un campo alfanumerico di tipo stringa, è il seguente:
+\textbf{Esempio} Un \textit{BST} di tipo semplice, in cui ogni nodo contiene una chiave numerica dell'insieme $\{1,2,3,4,5,6,10\}$ e un campo alfanumerico di tipo stringa, è il seguente:
 \begin{center}
 \begin{forest}
 for tree={forest node}
@@ -106,7 +106,7 @@ for tree={forest node}
 Bisogna notare che non è l'unico \textit{BST} costruibile partendo dallo stesso insieme di chiavi. Un'alternativa, per esempio, potrebbe essere stata quella di utilizzare il valore minore come chiave per la radice dell'albero, e attaccare in ordine crescente le altre chiavi, ognuna come figlio destro del nodo precedente.
 
 \subsection{Implementazione della struttura dati}  
-\lstinputlisting[language=Python,linerange={1-56}]{bst.py} 
+\lstinputlisting[language=Python,linerange={1-64}]{bst.py} 
 
 \subsection{Difetti dei \textit{BST}}  
 Questa struttura dati ha alcuni difetti \dots
@@ -123,7 +123,7 @@ Un \textit{albero AVL} $T$ è un \textit{BST} ($\star$), in cui vale la seguente
 dove $h(k)$ indica il valore dell'altezza dell'albero radicato in $k$, e $left(B)$ (rispettivamente $right(B)$) indica il sotto-albero sinistro (rispettivamente destro) di $B$.
 \\
 
-\textbf{Esempio} Un Albero \textit{AVL} in cui ogni nodo contiene una chiave numerica tra $\{1,2,3,4,5,6,9,10\}$ e un campo alfanumerico di tipo stringa, è il seguente:
+\textbf{Esempio} Un Albero \textit{AVL} in cui ogni nodo contiene una chiave numerica dell'insieme $\{1,2,3,4,5,6,9,10\}$ e un campo alfanumerico di tipo stringa, è il seguente:
 \begin{center}
 \begin{forest}
 for tree={forest node}
@@ -145,7 +145,7 @@ for tree={forest node}
 dove, ad esempio, $left(\texttt{root})$ ha altezza 2, mentre $right(\texttt{root})$ ha altezza 3.
 
 \subsection{Implementazione della struttura dati}  
-\lstinputlisting[language=Python,linerange={1-79}]{avl.py} 
+\lstinputlisting[language=Python,linerange={1-87}]{avl.py} 
 
 \subsection{Miglioramenti degli Alberi AVL rispetto ai \textit{BST}}  
 Questa struttura dati migliora alcuni aspetti dei \textit{BST} \dots
@@ -180,6 +180,6 @@ for tree={forest node}
 \end{center}
 
 \subsection{Implementazione della struttura dati}  
-\lstinputlisting[language=Python,linerange={1-158}]{rbt.py} 
+\lstinputlisting[language=Python,linerange={1-164}]{rbt.py} 
 
 \end{document}
