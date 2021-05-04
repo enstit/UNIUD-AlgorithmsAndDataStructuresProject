@@ -79,7 +79,7 @@ def avl_find(root, value):
         return
 
     if root.key == value:
-        print(root.name)
+        return root.name
 
     if root.key < value:
         return avl_find(root.right, value)
