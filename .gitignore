@@ -1,7 +1,7 @@
 ### macOS ###
 # General
 .DS_Store
-
+.afpDeleted*
 ### Vim ###
 # Swap
 [._]*.s[a-v][a-z]
