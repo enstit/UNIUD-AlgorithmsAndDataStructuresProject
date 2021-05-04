@@ -38,7 +38,7 @@
 \definecolor{folly}{rgb}{1.0, 0.0, 0.31}
 
 \lstdefinelanguage{python}{
-	morekeywords={and,assert,break,class,def,elif,else,for,from,global,if,import,as,in,is,lambda,not,or,pass,print,return,try,while},
+	morekeywords={and,assert,break,def,elif,else,for,from,global,if,import,as,in,is,lambda,not,or,pass,print,return,try,while},
 	morekeywords=[2]{abs,all,any,bool,chr,dict,dir,divmod,enumerate,eval,file,filter,float,format,globals,help,id,
 	input,int,len,list,locals,long,map,min,next,pow,range,input,round,set,str,sum,super,tuple,type,unichr,unicode,vars}, keywordstyle=\color{green},
 	morestring=[b]", morestring=[b]', stringstyle=\color{folly}, showstringspaces=false, upquote=true,
@@ -58,8 +58,7 @@
 %    forest node/.style={rectangle split,rectangle split parts=2,draw, text width=3em, text centered, l sep+=.25cm,s sep+=.25cm},
     b/.append style={draw=black, very thick},
     r/.append style={draw=red, very thick},
-    nill/.append style={rectangle,draw=black, very thick, text width=.05em,l sep-=3cm},
-    null/.append style={rectangle, text width=.05em,l sep-=3cm}
+    nill/.append style={rectangle,draw=black, very thick, text width=1em,l sep-=2.75cm}
   }
 
 
@@ -90,24 +89,18 @@ for tree={forest node}
 	[6\nodepart{lower}six
   		[5\nodepart{lower}five
     		[1\nodepart{lower}one
-				[,null]
+				[,phantom]
 				[2\nodepart{lower}two
-					[,null]
+					[,phantom]
 					[4\nodepart{lower}four
-						[3\nodepart{lower}three
-							[,null]
-							[,null]
-						]
-						[,null]
+						[3\nodepart{lower}three]
+						[,phantom]
 					]
 				]
 			]
-    		[,null]
+    		[,phantom]
   		]
-  		[10\nodepart{lower}ten
-			[,null]
-			[,null]
-		]
+  		[10\nodepart{lower}ten]
 	]
 \end{forest}
 \end{center}
@@ -137,26 +130,14 @@ dove $h(k)$ indica il valore dell'altezza dell'albero radicato in $k$, e $left(B
 for tree={forest node}
 	[4\nodepart{lower}four
   		[2\nodepart{lower}two
-    		[1\nodepart{lower}one
-				[,null]
-				[,null]
-			]
-    		[3\nodepart{lower}three
-				[,null]
-				[,null]
-			]
+    		[1\nodepart{lower}one]
+    		[3\nodepart{lower}three]
   		]
   		[6\nodepart{lower}six
-    		[5\nodepart{lower}five
-				[,null]
-				[,null]
-			]
+    		[5\nodepart{lower}five]
     		[10\nodepart{lower}ten
-				[9\nodepart{lower}nine
-					[,null]
-					[,null]
-				]
-				[,null]
+				[9\nodepart{lower}nine]
+				[,phantom]
 			]
   		]
 	]
@@ -182,30 +163,27 @@ Un \textit{albero di tipo Red-Black} (o \textit{RB Tree}) $T$ è un \textit{BST}
 dove $h_b(x)$ indica l'altezza nera dell'albero radicato in $x$, ovvero il massimo numero di nodi neri lungo un possibile cammino da $x$ a una foglia.
 \\
 
-\textbf{Esempio} Un \textit{BST} di tipo Red-Black, in cui ogni nodo contiene una chiave numerica dell'insieme $\{4,5,6,7,8,9,11,12\}$ e un campo alfanumerico di tipo stringa, è il seguente:
+\textbf{Esempio} Un \textit{BST} di tipo Red-Black, in cui ogni nodo contiene una chiave numerica dell'insieme $\{4,5,7,8,9,11,12\}$ e un campo alfanumerico di tipo stringa, è il seguente:
 \begin{center}
 \begin{forest}
 for tree={forest node}
       [8\nodepart{lower}eight, b
-        [6\nodepart{lower}six, r
-          [4\nodepart{lower}four, b
+        [5\nodepart{lower}five, b
+          [4\nodepart{lower}four, r
           	[, nill]
-          	[5\nodepart{lower}five, r
-				[, nill]
-				[, nill]
-			]
+			[, nill]
           ]
-          [7\nodepart{lower}seven, b
+          [7\nodepart{lower}seven, r
             [, nill]
 			[, nill]
           ]
         ]
-        [11\nodepart{lower}eleven, b,
-          [9\nodepart{lower}nine, r
+        [11\nodepart{lower}eleven, r,
+          [9\nodepart{lower}nine, b
           	[, nill]
 			[, nill]
           ]
-          [12\nodepart{lower}twelve, r
+          [12\nodepart{lower}twelve, b
           	[, nill]
 			[, nill]
           ]

@@ -19,7 +19,7 @@ out:    two
 in:     exit
 """
 
-TREE_TYPE = "BST"  # "BST" | "AVL" | "RBT"
+TREE_TYPE = "RBT"  # "BST" | "AVL" | "RBT"
 if(TREE_TYPE == "RBT"):
     t = RedBlackTree()
 else:

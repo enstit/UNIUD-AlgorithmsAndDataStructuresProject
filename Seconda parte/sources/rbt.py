@@ -162,14 +162,3 @@ def rbt_find(root, value):
         return rbt_find(root.right, value)
 
     return rbt_find(root.left, value)
-
-"""
-if __name__ == "__main__":
-    bst = RedBlackTree()
-    bst.rbt_insert(4, "four")
-    bst.rbt_insert(18, "eighteen")
-    bst.rbt_insert(3, "three")
-    rbt_find(bst.root, 18)
-
-    rbt_show(bst.root)
-"""
