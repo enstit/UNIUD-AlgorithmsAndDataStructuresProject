@@ -19,7 +19,6 @@
 
 \title{\textbf{Laboratorio di Algoritmi e Strutture Dati 2020/2021} --- Seconda parte}
 \date{\today}
-%\author{\href{mailto:bonaccorsi.mattia@spes.uniud.it}{Mattia Bonaccorsi}, \href{mailto:kouate.muhamed@spes.uniud.it}{Muhamed Kouate}, \href{mailto:stefanel.enrico@spes.uniud.it}{Enrico Stefanel}, \href{mailto:torchanyn.andriy@spes.uniud.it}{Andriy Torchanyn}}
 \author{\textbf{Mattia Bonaccorsi} --- 124610 -- \href{mailto:bonaccorsi.mattia@spes.uniud.it}{bonaccorsi.mattia@spes.uniud.it}
    \and \textbf{Muhamed Kouate} --- 137359 -- \href{mailto:kouate.muhamed@spes.uniud.it}{kouate.muhamed@spes.uniud.it}
    \and \textbf{Enrico Stefanel} --- 137411 -- \href{mailto:stefanel.enrico@spes.uniud.it}{stefanel.enrico@spes.uniud.it}
@@ -113,13 +112,10 @@ for tree={forest node}
 \end{center}
 Bisogna notare che non è l'unico \textit{BST} costruibile partendo dallo stesso insieme di chiavi. Un'alternativa, per esempio, potrebbe essere stata quella di utilizzare il valore minore come chiave per la radice dell'albero, e attaccare in ordine crescente le altre chiavi, ognuna come figlio destro del nodo precedente.
 
-\subsection{Implementazione della struttura dati}  
-\lstinputlisting[language=Python,linerange={1-64}]{bst.py} 
+%\subsection{Implementazione della struttura dati}  
+%\lstinputlisting[language=Python,linerange={1-64}]{bst.py} 
 
-\subsection{Difetti dei \textit{BST}}  
-Questa struttura dati ha alcuni difetti \dots
-
-
+\clearpage
 
 \section{Alberi binari di ricerca di tipo AVL}
 
@@ -164,13 +160,10 @@ for tree={forest node}
 \end{center},
 dove, ad esempio, $left(\texttt{root})$ ha altezza 2, mentre $right(\texttt{root})$ ha altezza 3.
 
-\subsection{Implementazione della struttura dati}  
-\lstinputlisting[language=Python]{avl.py} 
+%\subsection{Implementazione della struttura dati}  
+%\lstinputlisting[language=Python]{avl.py} 
 
-\subsection{Miglioramenti degli Alberi AVL rispetto ai \textit{BST}}  
-Questa struttura dati migliora alcuni aspetti dei \textit{BST} \dots
-
-
+\clearpage
 
 \section{Alberi binari di ricerca di tipo Red-Black}
 
@@ -182,7 +175,7 @@ Un \textit{albero di tipo Red-Black} (o \textit{RB Tree}) $T$ è un \textit{BST}
 dove $h_b(x)$ indica l'altezza nera dell'albero radicato in $x$, ovvero il massimo numero di nodi neri lungo un possibile cammino da $x$ a una foglia.
 \\
 
-\textbf{Esempio} Un \textit{BST} di tipo Red-Black, in cui ogni nodo contiene una chiave numerica dell'insieme $\{4,5,6,7,8,9,11,12\}$ e un campo alfanumerico di tipo stringa, è il seguente:
+\textbf{Esempio} Un \textit{BST} di tipo Red-Black, in cui ogni nodo contiene una chiave numerica dell'insieme $\{4,5,6,7,8,9,10,11\}$ e un campo alfanumerico di tipo stringa, è il seguente:
 \begin{center}
 \begin{forest}
 for tree={forest node}
@@ -200,12 +193,12 @@ for tree={forest node}
 			[, nill]
           ]
         ]
-        [11\nodepart{lower}eleven, b,
+        [10\nodepart{lower}ten, b,
           [9\nodepart{lower}nine, r
           	[, nill]
 			[, nill]
           ]
-          [12\nodepart{lower}twelve, r
+          [11\nodepart{lower}eleven, r
           	[, nill]
 			[, nill]
           ]
@@ -214,7 +207,206 @@ for tree={forest node}
  \end{forest}
 \end{center}
 
-\subsection{Implementazione della struttura dati}  
-\lstinputlisting[language=Python]{rbt.py} 
+%\subsection{Implementazione della struttura dati}  
+%\lstinputlisting[language=Python]{rbt.py} 
+
+\section{Calcolo della complessità}
+Implementate le tre strutture dati precedentemente descritte utilizzando il linguaggio Python, si è poi proceduto a calcolare i tempi medi per la ricerca e l'inserimento di $n$ chiavi generate in modo pseudo-casuale.
+
+\clearpage
+
+\subsection{Caso random}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.65]
+\pgfplotsset{
+    width=1.25\textwidth,
+    height=0.95\textwidth
+}
+
+\begin{axis}[
+	title={Tempi di ricerca e inserimento per alberi binari di ricerca},
+    axis line style={->},
+    xlabel={\small Dimensione dell'input (\textit{numero di nodi})},
+    ylabel={\small Tempo (\textit{sec})},
+	grid,
+	grid style={dotted,gray},
+	axis x line=bottom,
+    axis y line=left,
+    legend style={ at={(0.95,0.05)}, anchor=south east}
+    ]
+\addplot[mark=*, blue] table [x=size, y=amortizedTimes_BST, col sep=comma]{sources/results-random.csv};
+\addplot[mark=*, orange] table [x=size, y=amortizedTimes_AVL, col sep=comma]{sources/results-random.csv};
+\addplot[mark=*, green] table [x=size, y=amortizedTimes_RBT, col sep=comma]{sources/results-random.csv};
+\addlegendentry{Alberi BST semplici}
+\addlegendentry{Alberi BST di tipo \textit{AVL}}
+\addlegendentry{Alberi BST di tipo \textit{RB}}
+\end{axis}
+
+\end{tikzpicture}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.65]
+\pgfplotsset{
+    width=1.25\textwidth,
+    height=0.95\textwidth
+}
+
+\begin{axis}[
+	title={Tempi di ricerca e inserimento per alberi binari di ricerca},
+	xmode=log,
+	ymode=log,
+    axis line style={->},
+    xlabel={\small Dimensione dell'input (\textit{numero di nodi})},
+    ylabel={\small Tempo (\textit{sec})},
+	grid,
+	grid style={dotted,gray},
+	axis x line=bottom,
+    axis y line=left,
+    legend style={ at={(0.95,0.05)}, anchor=south east}
+	]
+\addplot[mark=*, blue] table [x=size, y=amortizedTimes_BST, col sep=comma]{sources/results-random.csv};
+\addplot[mark=*, orange] table [x=size, y=amortizedTimes_AVL, col sep=comma]{sources/results-random.csv};
+\addplot[mark=*, green] table [x=size, y=amortizedTimes_RBT, col sep=comma]{sources/results-random.csv};
+\addlegendentry{Alberi BST semplici}
+\addlegendentry{Alberi BST di tipo \textit{AVL}}
+\addlegendentry{Alberi BST di tipo \textit{RB}}
+\end{axis}
+
+\end{tikzpicture}
+\end{center}
+
+
+
+
+\subsection{Caso sorted}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.65]
+\pgfplotsset{
+    width=1.25\textwidth,
+    height=0.95\textwidth
+}
+
+\begin{axis}[
+	title={Tempi di ricerca e inserimento per alberi binari di ricerca},
+    axis line style={->},
+    xlabel={\small Dimensione dell'input (\textit{numero di nodi})},
+    ylabel={\small Tempo (\textit{sec})},
+	grid,
+	grid style={dotted,gray},
+	axis x line=bottom,
+    axis y line=left,
+    legend style={ at={(0.95,0.05)}, anchor=south east}
+    ]
+\addplot[mark=*, blue] table [x=size, y=amortizedTimes_BST, col sep=comma]{sources/results-sorted.csv};
+\addplot[mark=*, orange] table [x=size, y=amortizedTimes_AVL, col sep=comma]{sources/results-sorted.csv};
+\addplot[mark=*, green] table [x=size, y=amortizedTimes_RBT, col sep=comma]{sources/results-sorted.csv};
+\addlegendentry{Alberi BST semplici}
+\addlegendentry{Alberi BST di tipo \textit{AVL}}
+\addlegendentry{Alberi BST di tipo \textit{RB}}
+\end{axis}
+
+\end{tikzpicture}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.65]
+\pgfplotsset{
+    width=1.25\textwidth,
+    height=0.95\textwidth
+}
+
+\begin{axis}[
+	title={Tempi di ricerca e inserimento per alberi binari di ricerca},
+	xmode=log,
+	ymode=log,
+    axis line style={->},
+    xlabel={\small Dimensione dell'input (\textit{numero di nodi})},
+    ylabel={\small Tempo (\textit{sec})},
+	grid,
+	grid style={dotted,gray},
+	axis x line=bottom,
+    axis y line=left,
+    legend style={ at={(0.95,0.05)}, anchor=south east}
+	]
+\addplot[mark=*, blue] table [x=size, y=amortizedTimes_BST, col sep=comma]{sources/results-sorted.csv};
+\addplot[mark=*, orange] table [x=size, y=amortizedTimes_AVL, col sep=comma]{sources/results-sorted.csv};
+\addplot[mark=*, green] table [x=size, y=amortizedTimes_RBT, col sep=comma]{sources/results-sorted.csv};
+\addlegendentry{Alberi BST semplici}
+\addlegendentry{Alberi BST di tipo \textit{AVL}}
+\addlegendentry{Alberi BST di tipo \textit{RB}}
+\end{axis}
+
+\end{tikzpicture}
+\end{center}
+
+
+
+
+\subsection{Caso smart}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.65]
+\pgfplotsset{
+    width=1.25\textwidth,
+    height=0.95\textwidth
+}
+
+\begin{axis}[
+	title={Tempi di ricerca e inserimento per alberi binari di ricerca},
+    axis line style={->},
+    xlabel={\small Dimensione dell'input (\textit{numero di nodi})},
+    ylabel={\small Tempo (\textit{sec})},
+	grid,
+	grid style={dotted,gray},
+	axis x line=bottom,
+    axis y line=left,
+    legend style={ at={(0.95,0.05)}, anchor=south east}
+    ]
+\addplot[mark=*, blue] table [x=size, y=amortizedTimes_BST, col sep=comma]{sources/results-smart.csv};
+\addplot[mark=*, orange] table [x=size, y=amortizedTimes_AVL, col sep=comma]{sources/results-smart.csv};
+\addplot[mark=*, green] table [x=size, y=amortizedTimes_RBT, col sep=comma]{sources/results-smart.csv};
+\addlegendentry{Alberi BST semplici}
+\addlegendentry{Alberi BST di tipo \textit{AVL}}
+\addlegendentry{Alberi BST di tipo \textit{RB}}
+\end{axis}
+
+\end{tikzpicture}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.65]
+\pgfplotsset{
+    width=1.25\textwidth,
+    height=0.95\textwidth
+}
+
+\begin{axis}[
+	title={Tempi di ricerca e inserimento per alberi binari di ricerca},
+	xmode=log,
+	ymode=log,
+    axis line style={->},
+    xlabel={\small Dimensione dell'input (\textit{numero di nodi})},
+    ylabel={\small Tempo (\textit{sec})},
+	grid,
+	grid style={dotted,gray},
+	axis x line=bottom,
+    axis y line=left,
+    legend style={ at={(0.95,0.05)}, anchor=south east}
+	]
+\addplot[mark=*, blue] table [x=size, y=amortizedTimes_BST, col sep=comma]{sources/results-smart.csv};
+\addplot[mark=*, orange] table [x=size, y=amortizedTimes_AVL, col sep=comma]{sources/results-smart.csv};
+\addplot[mark=*, green] table [x=size, y=amortizedTimes_RBT, col sep=comma]{sources/results-smart.csv};
+\addlegendentry{Alberi BST semplici}
+\addlegendentry{Alberi BST di tipo \textit{AVL}}
+\addlegendentry{Alberi BST di tipo \textit{RB}}
+\end{axis}
+
+\end{tikzpicture}
+\end{center}
+
+
 
 \end{document}
