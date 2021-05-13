@@ -110,6 +110,7 @@ for tree={forest node}
 	]
 \end{forest}
 \end{center}
+
 Bisogna notare che non è l'unico \textit{BST} costruibile partendo dallo stesso insieme di chiavi. Un'alternativa, per esempio, potrebbe essere stata quella di utilizzare il valore minore come chiave per la radice dell'albero, e attaccare in ordine crescente le altre chiavi, ognuna come figlio destro del nodo precedente.
 
 %\subsection{Implementazione della struttura dati}  
@@ -210,20 +211,21 @@ for tree={forest node}
 %\subsection{Implementazione della struttura dati}  
 %\lstinputlisting[language=Python]{rbt.py} 
 
+\clearpage
+
 \section{Calcolo della complessità}
 Implementate le tre strutture dati precedentemente descritte utilizzando il linguaggio Python, si è poi proceduto a calcolare i tempi medi per la ricerca e l'inserimento di $n$ chiavi generate in modo pseudo-casuale.
 
-\clearpage
-
 \subsection{Caso random}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris dignissim vitae diam et placerat. Nulla egestas dui id ultrices hendrerit. Morbi in mi sed velit sollicitudin dictum ac vitae justo. Nunc auctor aliquam lectus nec aliquet. Aenean gravida elit sit amet pellentesque malesuada. Sed vel dolor porta, vestibulum nulla non, rutrum dolor. Morbi pretium mollis urna, at tempus erat aliquam ut. Ut id pellentesque elit. Etiam at dolor eget dui vehicula tempor. Nam mattis nec massa ut volutpat. Morbi id arcu sit amet augue faucibus eleifend in a metus.
 
 \begin{center}
-\begin{tikzpicture}[scale=0.65]
+\begin{minipage}{\textwidth}
+\begin{tikzpicture}[scale=0.4]
 \pgfplotsset{
     width=1.25\textwidth,
-    height=0.95\textwidth
+    height=1\textwidth
 }
-
 \begin{axis}[
 	title={Tempi di ricerca e inserimento per alberi binari di ricerca},
     axis line style={->},
@@ -242,17 +244,12 @@ Implementate le tre strutture dati precedentemente descritte utilizzando il ling
 \addlegendentry{Alberi BST di tipo \textit{AVL}}
 \addlegendentry{Alberi BST di tipo \textit{RB}}
 \end{axis}
-
 \end{tikzpicture}
-\end{center}
-
-\begin{center}
-\begin{tikzpicture}[scale=0.65]
+\begin{tikzpicture}[scale=0.4]
 \pgfplotsset{
     width=1.25\textwidth,
-    height=0.95\textwidth
+    height=1\textwidth
 }
-
 \begin{axis}[
 	title={Tempi di ricerca e inserimento per alberi binari di ricerca},
 	xmode=log,
@@ -273,22 +270,22 @@ Implementate le tre strutture dati precedentemente descritte utilizzando il ling
 \addlegendentry{Alberi BST di tipo \textit{AVL}}
 \addlegendentry{Alberi BST di tipo \textit{RB}}
 \end{axis}
-
 \end{tikzpicture}
+\end{minipage}
 \end{center}
-
-
+Nullam eu nisl eget neque lacinia pulvinar. Maecenas sit amet aliquam metus. Etiam volutpat quam a mi varius, malesuada aliquet augue porttitor. Aenean ut imperdiet libero. In hac habitasse platea dictumst. Nulla ultrices consequat neque, vel dictum sem fringilla at. Phasellus in sapien sit amet lectus rutrum vestibulum id vitae neque. Suspendisse vitae felis vitae velit hendrerit mollis.
 
 
 \subsection{Caso sorted}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris dignissim vitae diam et placerat. Nulla egestas dui id ultrices hendrerit. Morbi in mi sed velit sollicitudin dictum ac vitae justo. Nunc auctor aliquam lectus nec aliquet. Aenean gravida elit sit amet pellentesque malesuada. Sed vel dolor porta, vestibulum nulla non, rutrum dolor. Morbi pretium mollis urna, at tempus erat aliquam ut. Ut id pellentesque elit. Etiam at dolor eget dui vehicula tempor. Nam mattis nec massa ut volutpat. Morbi id arcu sit amet augue faucibus eleifend in a metus.
 
 \begin{center}
-\begin{tikzpicture}[scale=0.65]
+\begin{minipage}{\textwidth}
+\begin{tikzpicture}[scale=0.4]
 \pgfplotsset{
     width=1.25\textwidth,
     height=0.95\textwidth
 }
-
 \begin{axis}[
 	title={Tempi di ricerca e inserimento per alberi binari di ricerca},
     axis line style={->},
@@ -307,17 +304,12 @@ Implementate le tre strutture dati precedentemente descritte utilizzando il ling
 \addlegendentry{Alberi BST di tipo \textit{AVL}}
 \addlegendentry{Alberi BST di tipo \textit{RB}}
 \end{axis}
-
 \end{tikzpicture}
-\end{center}
-
-\begin{center}
-\begin{tikzpicture}[scale=0.65]
+\begin{tikzpicture}[scale=0.4]
 \pgfplotsset{
     width=1.25\textwidth,
     height=0.95\textwidth
 }
-
 \begin{axis}[
 	title={Tempi di ricerca e inserimento per alberi binari di ricerca},
 	xmode=log,
@@ -338,22 +330,22 @@ Implementate le tre strutture dati precedentemente descritte utilizzando il ling
 \addlegendentry{Alberi BST di tipo \textit{AVL}}
 \addlegendentry{Alberi BST di tipo \textit{RB}}
 \end{axis}
-
 \end{tikzpicture}
+\end{minipage}
 \end{center}
-
-
+Nullam eu nisl eget neque lacinia pulvinar. Maecenas sit amet aliquam metus. Etiam volutpat quam a mi varius, malesuada aliquet augue porttitor. Aenean ut imperdiet libero. In hac habitasse platea dictumst. Nulla ultrices consequat neque, vel dictum sem fringilla at. Phasellus in sapien sit amet lectus rutrum vestibulum id vitae neque. Suspendisse vitae felis vitae velit hendrerit mollis.
 
 
 \subsection{Caso smart}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris dignissim vitae diam et placerat. Nulla egestas dui id ultrices hendrerit. Morbi in mi sed velit sollicitudin dictum ac vitae justo. Nunc auctor aliquam lectus nec aliquet. Aenean gravida elit sit amet pellentesque malesuada. Sed vel dolor porta, vestibulum nulla non, rutrum dolor. Morbi pretium mollis urna, at tempus erat aliquam ut. Ut id pellentesque elit. Etiam at dolor eget dui vehicula tempor. Nam mattis nec massa ut volutpat. Morbi id arcu sit amet augue faucibus eleifend in a metus.
 
 \begin{center}
-\begin{tikzpicture}[scale=0.65]
+\begin{minipage}{\textwidth}
+\begin{tikzpicture}[scale=0.4]
 \pgfplotsset{
     width=1.25\textwidth,
     height=0.95\textwidth
 }
-
 \begin{axis}[
 	title={Tempi di ricerca e inserimento per alberi binari di ricerca},
     axis line style={->},
@@ -372,17 +364,12 @@ Implementate le tre strutture dati precedentemente descritte utilizzando il ling
 \addlegendentry{Alberi BST di tipo \textit{AVL}}
 \addlegendentry{Alberi BST di tipo \textit{RB}}
 \end{axis}
-
 \end{tikzpicture}
-\end{center}
-
-\begin{center}
-\begin{tikzpicture}[scale=0.65]
+\begin{tikzpicture}[scale=0.4]
 \pgfplotsset{
     width=1.25\textwidth,
     height=0.95\textwidth
 }
-
 \begin{axis}[
 	title={Tempi di ricerca e inserimento per alberi binari di ricerca},
 	xmode=log,
@@ -403,10 +390,10 @@ Implementate le tre strutture dati precedentemente descritte utilizzando il ling
 \addlegendentry{Alberi BST di tipo \textit{AVL}}
 \addlegendentry{Alberi BST di tipo \textit{RB}}
 \end{axis}
-
 \end{tikzpicture}
+\end{minipage}
 \end{center}
-
+Nullam eu nisl eget neque lacinia pulvinar. Maecenas sit amet aliquam metus. Etiam volutpat quam a mi varius, malesuada aliquet augue porttitor. Aenean ut imperdiet libero. In hac habitasse platea dictumst. Nulla ultrices consequat neque, vel dictum sem fringilla at. Phasellus in sapien sit amet lectus rutrum vestibulum id vitae neque. Suspendisse vitae felis vitae velit hendrerit mollis.
 
 
 \end{document}
