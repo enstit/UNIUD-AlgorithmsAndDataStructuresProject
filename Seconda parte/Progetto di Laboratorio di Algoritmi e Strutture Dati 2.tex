@@ -113,10 +113,25 @@ for tree={forest node}
 
 Bisogna notare che non è l'unico \textit{BST} costruibile partendo dallo stesso insieme di chiavi. Un'alternativa, per esempio, potrebbe essere stata quella di utilizzare il valore minore come chiave per la radice dell'albero, e attaccare in ordine crescente le altre chiavi, ognuna come figlio destro del nodo precedente.
 
-%\subsection{Implementazione della struttura dati}  
-%\lstinputlisting[language=Python,linerange={1-64}]{bst.py} 
+\subsection{Implementazione della struttura dati}
+Per implementare la struttura dati dell'Albero binario di ricerca semplice, abbiamo innanzitutto bisogno di definire una classe \texttt{Node} per le istanze dei Nodi che compongono il BST:
+\lstinputlisting[language=Python,linerange={1-7}]{bst.py} 
 
-\clearpage
+Una volta definita la classe \texttt{Node}, possiamo procedere con l'implementazione dell'inserimento di un Nodo nel BST:
+\lstinputlisting[language=Python,linerange={10-28}]{bst.py}
+
+Definiamo poi una procedura, anche questa ricorsiva, per la ricerca di un Nodo all'interno di un Albero:
+\lstinputlisting[language=Python,linerange={64-80}]{bst.py}
+
+\subsubsection{Osservazioni sull'implementazione della struttura dati}
+Le procedure per l'inserimento e la ricerca di un nodo all'interno di un BST sono state scritte in maniera ricorsiva, per chiarezza. Essendo però una \textit{ricorsione di coda}, è immediato trasformare le funzioni per ottenere delle funzioni iterative.
+
+La funzione per l'inserimento, scritta in maniera iterativa, sarebbe la seguente:
+\lstinputlisting[language=Python,linerange={30-61}]{bst.py}
+, mentre la funzione di ricerca sarebbe scritta in questo modo:
+\lstinputlisting[language=Python,linerange={82-98}]{bst.py}
+
+
 
 \section{Alberi binari di ricerca di tipo AVL}
 
@@ -221,7 +236,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris dignissim vitae 
 
 \begin{center}
 \begin{minipage}{\textwidth}
-\begin{tikzpicture}[scale=0.4]
+\begin{tikzpicture}[scale=0.39]
 \pgfplotsset{
     width=1.25\textwidth,
     height=1\textwidth
@@ -245,7 +260,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris dignissim vitae 
 \addlegendentry{Alberi BST di tipo \textit{RB}}
 \end{axis}
 \end{tikzpicture}
-\begin{tikzpicture}[scale=0.4]
+\begin{tikzpicture}[scale=0.39]
 \pgfplotsset{
     width=1.25\textwidth,
     height=1\textwidth
@@ -281,7 +296,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris dignissim vitae 
 
 \begin{center}
 \begin{minipage}{\textwidth}
-\begin{tikzpicture}[scale=0.4]
+\begin{tikzpicture}[scale=0.39]
 \pgfplotsset{
     width=1.25\textwidth,
     height=0.95\textwidth
@@ -305,7 +320,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris dignissim vitae 
 \addlegendentry{Alberi BST di tipo \textit{RB}}
 \end{axis}
 \end{tikzpicture}
-\begin{tikzpicture}[scale=0.4]
+\begin{tikzpicture}[scale=0.39]
 \pgfplotsset{
     width=1.25\textwidth,
     height=0.95\textwidth
@@ -341,7 +356,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris dignissim vitae 
 
 \begin{center}
 \begin{minipage}{\textwidth}
-\begin{tikzpicture}[scale=0.4]
+\begin{tikzpicture}[scale=0.39]
 \pgfplotsset{
     width=1.25\textwidth,
     height=0.95\textwidth
@@ -365,7 +380,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris dignissim vitae 
 \addlegendentry{Alberi BST di tipo \textit{RB}}
 \end{axis}
 \end{tikzpicture}
-\begin{tikzpicture}[scale=0.4]
+\begin{tikzpicture}[scale=0.39]
 \pgfplotsset{
     width=1.25\textwidth,
     height=0.95\textwidth

@@ -1,4 +1,5 @@
 class Node():
+    
     def __init__(self, value, str_name):
         self.key = value
         self.name = str_name
