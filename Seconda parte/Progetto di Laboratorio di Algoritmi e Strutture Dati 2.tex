@@ -37,9 +37,8 @@
 \definecolor{folly}{rgb}{1.0, 0.0, 0.31}
 
 \lstdefinelanguage{python}{
-	morekeywords={and,assert,break,class,def,elif,else,for,from,global,if,import,as,in,is,lambda,not,or,pass,print,return,try,while},
-	morekeywords=[2]{abs,all,any,bool,chr,dict,dir,divmod,enumerate,eval,file,filter,float,format,globals,help,id,
-	input,int,len,list,locals,long,map,min,next,pow,range,input,round,set,str,sum,super,tuple,type,unichr,unicode,vars}, keywordstyle=\color{green},
+	morekeywords={class,def,if,is,not,else,elif,return,while,for,from,import}, keywordstyle=\color{green},
+	emph={self,super,None},emphstyle={\color{magenta}},
 	morestring=[b]", morestring=[b]', stringstyle=\color{folly}, showstringspaces=false, upquote=true,
     morecomment=[l]\#, commentstyle=\color{cyan},
     frame=single, framexleftmargin=2em, backgroundcolor=\color{snow},
@@ -115,23 +114,24 @@ Bisogna notare che non è l'unico \textit{BST} costruibile partendo dallo stesso
 
 \subsection{Implementazione della struttura dati}
 Per implementare la struttura dati dell'Albero binario di ricerca semplice, abbiamo innanzitutto bisogno di definire una classe \texttt{Node} per le istanze dei Nodi che compongono il BST:
-\lstinputlisting[language=Python,linerange={1-7}]{bst.py} 
+\lstinputlisting[language=Python,linerange={1-6}]{Node.py} 
 
 Una volta definita la classe \texttt{Node}, possiamo procedere con l'implementazione dell'inserimento di un Nodo nel BST:
-\lstinputlisting[language=Python,linerange={10-28}]{bst.py}
+\lstinputlisting[language=Python,linerange={12-19}]{bst.py}
 
 Definiamo poi una procedura, anche questa ricorsiva, per la ricerca di un Nodo all'interno di un Albero:
-\lstinputlisting[language=Python,linerange={64-80}]{bst.py}
+\lstinputlisting[language=Python,linerange={54-61}]{bst.py}
 
 \subsubsection{Osservazioni sull'implementazione della struttura dati}
 Le procedure per l'inserimento e la ricerca di un nodo all'interno di un BST sono state scritte in maniera ricorsiva, per chiarezza. Essendo però una \textit{ricorsione di coda}, è immediato trasformare le funzioni per ottenere delle funzioni iterative.
 
 La funzione per l'inserimento, scritta in maniera iterativa, sarebbe la seguente:
-\lstinputlisting[language=Python,linerange={30-61}]{bst.py}
+\lstinputlisting[language=Python,linerange={30-46}]{bst.py}
 , mentre la funzione di ricerca sarebbe scritta in questo modo:
-\lstinputlisting[language=Python,linerange={82-98}]{bst.py}
+\lstinputlisting[language=Python,linerange={69-78}]{bst.py}
 
 
+\clearpage
 
 \section{Alberi binari di ricerca di tipo AVL}
 
@@ -176,8 +176,15 @@ for tree={forest node}
 \end{center},
 dove, ad esempio, $left(\texttt{root})$ ha altezza 2, mentre $right(\texttt{root})$ ha altezza 3.
 
-%\subsection{Implementazione della struttura dati}  
-%\lstinputlisting[language=Python]{avl.py} 
+\subsection{Implementazione della struttura dati}
+Come per la struttura dati degli Alberi binari di ricerca semplice, dobbiamo definire una classe \texttt{AVLNode} (sottoclasse di \texttt{Node}) per le istanze dei Nodi che compongono l'albero AVL:
+\lstinputlisting[language=Python,linerange={9-12}]{Node.py} 
+
+Una volta definita la classe \texttt{AVLNode}, possiamo procedere con l'implementazione della procedura per l'inserimento:
+\lstinputlisting[language=Python,linerange={13-36}]{avl.py}
+e con quella per la ricerca di un Nodo all'interno dell'Albero di tipo \textit{AVL}:
+\lstinputlisting[language=Python,linerange={63-70}]{avl.py}
+
 
 \clearpage
 
@@ -223,7 +230,15 @@ for tree={forest node}
  \end{forest}
 \end{center}
 
-%\subsection{Implementazione della struttura dati}  
+\subsection{Implementazione della struttura dati}  
+Definiamo inanzitutto una classe \texttt{RBTNode} (sottoclasse di \texttt{Node}), in maniera analoga a quanto fatto per gli alberi di tipo \textit{AVL}:
+\lstinputlisting[language=Python,linerange={15-19}]{Node.py}
+
+Siamo quindi pronti per implementare in maniera ricorsiva la funzione di inserimento:
+\lstinputlisting[language=Python,linerange={4-65}]{rbt.py}
+
+
+\dots
 %\lstinputlisting[language=Python]{rbt.py} 
 
 \clearpage
@@ -350,65 +365,6 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris dignissim vitae 
 \end{center}
 Nullam eu nisl eget neque lacinia pulvinar. Maecenas sit amet aliquam metus. Etiam volutpat quam a mi varius, malesuada aliquet augue porttitor. Aenean ut imperdiet libero. In hac habitasse platea dictumst. Nulla ultrices consequat neque, vel dictum sem fringilla at. Phasellus in sapien sit amet lectus rutrum vestibulum id vitae neque. Suspendisse vitae felis vitae velit hendrerit mollis.
 
-
-\subsection{Caso smart}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris dignissim vitae diam et placerat. Nulla egestas dui id ultrices hendrerit. Morbi in mi sed velit sollicitudin dictum ac vitae justo. Nunc auctor aliquam lectus nec aliquet. Aenean gravida elit sit amet pellentesque malesuada. Sed vel dolor porta, vestibulum nulla non, rutrum dolor. Morbi pretium mollis urna, at tempus erat aliquam ut. Ut id pellentesque elit. Etiam at dolor eget dui vehicula tempor. Nam mattis nec massa ut volutpat. Morbi id arcu sit amet augue faucibus eleifend in a metus.
-
-\begin{center}
-\begin{minipage}{\textwidth}
-\begin{tikzpicture}[scale=0.39]
-\pgfplotsset{
-    width=1.25\textwidth,
-    height=0.95\textwidth
-}
-\begin{axis}[
-	title={Tempi di ricerca e inserimento per alberi binari di ricerca},
-    axis line style={->},
-    xlabel={\small Dimensione dell'input (\textit{numero di nodi})},
-    ylabel={\small Tempo (\textit{sec})},
-	grid,
-	grid style={dotted,gray},
-	axis x line=bottom,
-    axis y line=left,
-    legend style={ at={(0.95,0.05)}, anchor=south east}
-    ]
-\addplot[mark=*, blue] table [x=size, y=amortizedTimes_BST, col sep=comma]{sources/results-smart.csv};
-\addplot[mark=*, orange] table [x=size, y=amortizedTimes_AVL, col sep=comma]{sources/results-smart.csv};
-\addplot[mark=*, green] table [x=size, y=amortizedTimes_RBT, col sep=comma]{sources/results-smart.csv};
-\addlegendentry{Alberi BST semplici}
-\addlegendentry{Alberi BST di tipo \textit{AVL}}
-\addlegendentry{Alberi BST di tipo \textit{RB}}
-\end{axis}
-\end{tikzpicture}
-\begin{tikzpicture}[scale=0.39]
-\pgfplotsset{
-    width=1.25\textwidth,
-    height=0.95\textwidth
-}
-\begin{axis}[
-	title={Tempi di ricerca e inserimento per alberi binari di ricerca},
-	xmode=log,
-	ymode=log,
-    axis line style={->},
-    xlabel={\small Dimensione dell'input (\textit{numero di nodi})},
-    ylabel={\small Tempo (\textit{sec})},
-	grid,
-	grid style={dotted,gray},
-	axis x line=bottom,
-    axis y line=left,
-    legend style={ at={(0.95,0.05)}, anchor=south east}
-	]
-\addplot[mark=*, blue] table [x=size, y=amortizedTimes_BST, col sep=comma]{sources/results-smart.csv};
-\addplot[mark=*, orange] table [x=size, y=amortizedTimes_AVL, col sep=comma]{sources/results-smart.csv};
-\addplot[mark=*, green] table [x=size, y=amortizedTimes_RBT, col sep=comma]{sources/results-smart.csv};
-\addlegendentry{Alberi BST semplici}
-\addlegendentry{Alberi BST di tipo \textit{AVL}}
-\addlegendentry{Alberi BST di tipo \textit{RB}}
-\end{axis}
-\end{tikzpicture}
-\end{minipage}
-\end{center}
-Nullam eu nisl eget neque lacinia pulvinar. Maecenas sit amet aliquam metus. Etiam volutpat quam a mi varius, malesuada aliquet augue porttitor. Aenean ut imperdiet libero. In hac habitasse platea dictumst. Nulla ultrices consequat neque, vel dictum sem fringilla at. Phasellus in sapien sit amet lectus rutrum vestibulum id vitae neque. Suspendisse vitae felis vitae velit hendrerit mollis.
 
 
 \end{document}

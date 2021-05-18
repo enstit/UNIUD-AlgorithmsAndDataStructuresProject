@@ -7,6 +7,10 @@ import random
 import statistics as st
 import time as t
 
+### CAUTION !!!!!!
+import sys
+sys.setrecursionlimit(100_000)
+
 # Create an array with exponential sizes
 # in range(FIRST_SIZE,LAST_SIZE)
 def sizeGenerator(first_size, last_size, span):
@@ -71,7 +75,7 @@ def runBSTsorted(n): # int n -> size of the tree
     for i in range(1, n):
         key = i
         #if bst_find(node, key) is None: possiamo omettere il controllo, altrimenti dobbiamo usare la versione iterativa
-        bst_insert_iterative(node, key, "")
+        bst_insert(node, key, "")
 
 def runAVLsorted(n): # int n -> size of the tree
     node = AVLNode(0, "")
@@ -90,27 +94,27 @@ def runRBTsorted(n): # int n -> size of the tree
 
 ##############################
 
-def runBSTsmart(n): # n -> list of keys to generate bst
-    node = Node(random.randint(0, MAX_KEY), "")
-    for i in n:
-        key = i
-        if bst_find(node, key) == None:
-            bst_insert(node, key, "")
+# def runBSTsmart(n): # n -> list of keys to generate bst
+#     node = Node(random.randint(0, MAX_KEY), "")
+#     for i in n:
+#         key = i
+#         if bst_find(node, key) == None:
+#             bst_insert(node, key, "")
 
-def runAVLsmart(n): # n -> list of keys to generate avl tree
-    node = AVLNode(random.randint(0, MAX_KEY), "")
-    for i in n:
-        key = i
-        if avl_find(node, key) == None:
-            avl_insert(node, key, "")
+# def runAVLsmart(n): # n -> list of keys to generate avl tree
+#     node = AVLNode(random.randint(0, MAX_KEY), "")
+#     for i in n:
+#         key = i
+#         if avl_find(node, key) == None:
+#             avl_insert(node, key, "")
 
-def runRBTsmart(n): # n -> list of keys to generate rbt
-    node = RedBlackTree()
-    node.rbt_insert(random.randint(0, MAX_KEY), "")
-    for i in n:
-        key = i
-        if rbt_find(node.root, key) == None:
-            node.rbt_insert(key, "")
+# def runRBTsmart(n): # n -> list of keys to generate rbt
+#     node = RedBlackTree()
+#     node.rbt_insert(random.randint(0, MAX_KEY), "")
+#     for i in n:
+#         key = i
+#         if rbt_find(node.root, key) == None:
+#             node.rbt_insert(key, "")
 
 ##############################
 
@@ -185,65 +189,6 @@ for i in range(RANGE):
 with open('results-random.csv', 'w', newline='') as file:
     writer = csv.writer(file)
     writer.writerows(row_list)
-
-##############################
-
-
-#############################
-######## SMART METHOD #######
-#############################
-
-new_generated_input = generateInput(dim)
-
-amortizedTimes_BST_smart = []
-for n in new_generated_input:
-    i = 0
-    t_passed = 0
-    while ( t_passed <= t_min ):
-        start = t.time()
-        runBSTsmart(n)
-        end = t.time()
-        i += 1
-        t_passed += end-start
-    amortizedTimes_BST_smart.append((t_passed/i)/len(n))
-
-amortizedTimes_AVL_smart = []
-for n in new_generated_input:
-    i = 0
-    t_passed = 0
-    while ( t_passed <= t_min ):
-        start = t.time()
-        runAVLsmart(n)
-        end = t.time()
-        i += 1
-        t_passed += end-start
-    amortizedTimes_AVL_smart.append((t_passed/i)/len(n))
-
-# Create an array with averege amortized timings for BST
-amortizedTimes_RBT_smart = []
-for n in new_generated_input:
-    i = 0
-    t_passed = 0
-    while ( t_passed <= t_min ):
-        start = t.time()
-        runRBTsmart(n)
-        end = t.time()
-        i += 1
-        t_passed += end-start
-    amortizedTimes_RBT_smart.append((t_passed/i)/len(n))
-
-row_list = [['id', 'size', 'amortizedTimes_BST', 'deviazioneStandard_BST', 'amortizedTimes_AVL', 'deviazioneStandard_AVL', 'amortizedTimes_RBT', 'deviazioneStandard_RBT']]
-for i in range(RANGE):
-    row_list.append([
-        i, dim[i], amortizedTimes_BST_smart[i], st.stdev(amortizedTimes_BST_smart),
-        amortizedTimes_AVL_smart[i], st.stdev(amortizedTimes_AVL_smart), 
-        amortizedTimes_RBT_smart[i], st.stdev(amortizedTimes_RBT_smart)
-     ])
-
-with open('results-smart.csv', 'w', newline='') as file:
-    writer = csv.writer(file)
-    writer.writerows(row_list)
-
 
 ##############################
 
