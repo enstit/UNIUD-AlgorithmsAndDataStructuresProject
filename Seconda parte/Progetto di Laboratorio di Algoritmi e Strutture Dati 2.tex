@@ -68,6 +68,15 @@
 
 \clearpage
 
+\section{Introduzione}
+In questo elaborato si analizzano le implementazioni per tre strutture dati ad Alberi di ricerca, ovvero:
+\begin{itemize}
+	\item gli Alberi binari di ricerca semplici,
+	\item gli Alberi binari di ricerca di tipo AVL,
+	\item gli Alberi binari di ricerca di tipo Red-Black.
+\end{itemize} 
+Una volta implementate le strutture dati in Python3, si è proceduto all'analisi dei tempi medi di esecuzione per la ricerca e l'inserimento di $n$ nodi per tipo di albero (con $n$ ragionevolmente alto).
+
 \section{Alberi binari di ricerca semplici}
 
 \subsection{Definizione di \textit{BST}}  
@@ -131,7 +140,6 @@ La funzione per l'inserimento, scritta in maniera iterativa, sarebbe la seguente
 \lstinputlisting[language=Python,linerange={69-78}]{bst.py}
 
 
-\clearpage
 
 \section{Alberi binari di ricerca di tipo AVL}
 
@@ -231,23 +239,24 @@ for tree={forest node}
 \end{center}
 
 \subsection{Implementazione della struttura dati}  
-Definiamo inanzitutto una classe \texttt{RBTNode} (sottoclasse di \texttt{Node}), in maniera analoga a quanto fatto per gli alberi di tipo \textit{AVL}:
+Definiamo innanzitutto una classe \texttt{RBTNode} (sottoclasse di \texttt{Node}), in maniera analoga a quanto fatto per gli alberi di tipo \textit{AVL}:
 \lstinputlisting[language=Python,linerange={15-19}]{Node.py}
 
-Siamo quindi pronti per implementare in maniera ricorsiva la funzione di inserimento:
-\lstinputlisting[language=Python,linerange={4-65}]{rbt.py}
+Dobbiamo anche definire una classe \texttt{RedBlackTree}, per gestire le foglie \texttt{NIL}:
+\lstinputlisting[language=Python,linerange={4-10}]{rbt.py}
+
+Siamo quindi pronti per implementare la funzione di inserimento
+\lstinputlisting[language=Python,linerange={45-99}]{rbt.py}
+e la funzione di ricerca
+\lstinputlisting[language=Python,linerange={132-143}]{rbt.py}
 
 
-\dots
-%\lstinputlisting[language=Python]{rbt.py} 
-
-\clearpage
 
 \section{Calcolo della complessità}
 Implementate le tre strutture dati precedentemente descritte utilizzando il linguaggio Python, si è poi proceduto a calcolare i tempi medi per la ricerca e l'inserimento di $n$ chiavi generate in modo pseudo-casuale.
 
 \subsection{Caso random}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris dignissim vitae diam et placerat. Nulla egestas dui id ultrices hendrerit. Morbi in mi sed velit sollicitudin dictum ac vitae justo. Nunc auctor aliquam lectus nec aliquet. Aenean gravida elit sit amet pellentesque malesuada. Sed vel dolor porta, vestibulum nulla non, rutrum dolor. Morbi pretium mollis urna, at tempus erat aliquam ut. Ut id pellentesque elit. Etiam at dolor eget dui vehicula tempor. Nam mattis nec massa ut volutpat. Morbi id arcu sit amet augue faucibus eleifend in a metus.
+Lorem ipsum dolor sit amet, \dots
 
 \begin{center}
 \begin{minipage}{\textwidth}
@@ -303,11 +312,11 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris dignissim vitae 
 \end{tikzpicture}
 \end{minipage}
 \end{center}
-Nullam eu nisl eget neque lacinia pulvinar. Maecenas sit amet aliquam metus. Etiam volutpat quam a mi varius, malesuada aliquet augue porttitor. Aenean ut imperdiet libero. In hac habitasse platea dictumst. Nulla ultrices consequat neque, vel dictum sem fringilla at. Phasellus in sapien sit amet lectus rutrum vestibulum id vitae neque. Suspendisse vitae felis vitae velit hendrerit mollis.
 
 
 \subsection{Caso sorted}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris dignissim vitae diam et placerat. Nulla egestas dui id ultrices hendrerit. Morbi in mi sed velit sollicitudin dictum ac vitae justo. Nunc auctor aliquam lectus nec aliquet. Aenean gravida elit sit amet pellentesque malesuada. Sed vel dolor porta, vestibulum nulla non, rutrum dolor. Morbi pretium mollis urna, at tempus erat aliquam ut. Ut id pellentesque elit. Etiam at dolor eget dui vehicula tempor. Nam mattis nec massa ut volutpat. Morbi id arcu sit amet augue faucibus eleifend in a metus.
+Si è proceduto inoltre ad analizzare i tempi medi di esecuzione nelle tre strutture dati anche nel caso di input che rappresenti il caso pessimo possibile: in questo caso, lo scenario peggiore per le funzioni di inserimento è quello di input ordinati in ordine crescente (ma sarebbe stato equivalente considerare l'ordine decrescente).
+Questo perché, per inserire un nuovo nodo nell'albero, dobbiamo necessariamente scorrere tutto il percorso verso la sua posizione finale. Nel caso di input ordinati, appunto, questo percorso sarà sempre massimizzato.
 
 \begin{center}
 \begin{minipage}{\textwidth}
@@ -363,8 +372,13 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris dignissim vitae 
 \end{tikzpicture}
 \end{minipage}
 \end{center}
-Nullam eu nisl eget neque lacinia pulvinar. Maecenas sit amet aliquam metus. Etiam volutpat quam a mi varius, malesuada aliquet augue porttitor. Aenean ut imperdiet libero. In hac habitasse platea dictumst. Nulla ultrices consequat neque, vel dictum sem fringilla at. Phasellus in sapien sit amet lectus rutrum vestibulum id vitae neque. Suspendisse vitae felis vitae velit hendrerit mollis.
 
+Come ci si aspettava, la struttura dati che ha registrato tempi di esecuzione decisamente maggiori è quella degli Alberi Binari di ricerca semplici, dato che non introducono alcuna politica per il bilanciamento dell'albero in fase di popolazione dello stesso.
+
+Gli alberi di tipo \textit{Red-Black} ottengono pressapoco lo stesso risultato del caso di input randomici, mentre gli alberi di tipo \textit{AVL} risultano la struttura dati che questo caso ottiene risultati migliori, ma comunque poco distanti dai \textit{Red-Black}.
+
+\subsection{Conclusioni}
+In conclusione, si ritiene che la struttura dati che globalmente è maggiormente indicata per la memorizzazione di alberi binari di ricerca, indipendentemente dalla struttura degli input, siano proprio gli alberi di tipo \textit{Red-Black}.
 
 
 \end{document}

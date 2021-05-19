@@ -7,9 +7,6 @@ import random
 import statistics as st
 import time as t
 
-### CAUTION !!!!!!
-import sys
-sys.setrecursionlimit(100_000)
 
 # Create an array with exponential sizes
 # in range(FIRST_SIZE,LAST_SIZE)
@@ -74,14 +71,12 @@ def runBSTsorted(n): # int n -> size of the tree
     node = Node(0, "")
     for i in range(1, n):
         key = i
-        #if bst_find(node, key) is None: possiamo omettere il controllo, altrimenti dobbiamo usare la versione iterativa
-        bst_insert(node, key, "")
+        bst_insert_iterative(node, key, "")
 
 def runAVLsorted(n): # int n -> size of the tree
     node = AVLNode(0, "")
     for i in range(1, n):
         key = i
-        #if avl_find(node, key) == None:
         avl_insert(node, key, "")
 
 def runRBTsorted(n): # int n -> size of the tree
