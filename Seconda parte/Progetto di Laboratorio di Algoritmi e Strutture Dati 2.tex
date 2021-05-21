@@ -255,8 +255,12 @@ e la funzione di ricerca
 \section{Calcolo della complessità}
 Implementate le tre strutture dati precedentemente descritte utilizzando il linguaggio Python, si è poi proceduto a calcolare i tempi medi per la ricerca e l'inserimento di $n$ chiavi generate in modo pseudo-casuale.
 
+Nello specifico, per ogni struttura dati si sono generati $100$ input, le cui dimensioni seguono una distribuzione geometrica tra la dimensione $1\,000$ e la dimensione $100\,000$, e singoli valori generati in maniera casuale. Si è poi proceduto calcolando la risoluzione del sistema (pari, nel nostro calcolatore, a circa $0.9547$ millesimi di secondo). Per ultimo, si è memorizzato in un array i tempi (ammortizzati nella risoluzione del sistema) di esecuzione della ricerca e successivo inserimento per ogni input, come mostrato di seguito (solo per gli Alberi Binari di Ricerca di tipo semplice):
+\lstinputlisting[language=Python,linerange={138-148}]{complexity.py}
+\lstinputlisting[language=Python,linerange={46-51}]{complexity.py}
+
 \subsection{Caso random}
-Lorem ipsum dolor sit amet, \dots
+I grafici dei risultati ottenuti sono illustrati di seguito, sia in scala lineare che in scala logaritmica.
 
 \begin{center}
 \begin{minipage}{\textwidth}
@@ -313,6 +317,7 @@ Lorem ipsum dolor sit amet, \dots
 \end{minipage}
 \end{center}
 
+La struttura dati che globalmente ottiene prestazioni peggiori è quella degli Alberi Binari di Ricerca di tipo \textit{AVL}, mentre quelli semplici e di tipo \textit{RB} ottengono risultati pressoché simili. Si nota, comunque, che anche nel caso di maggiore distanza in termini di tempo tra gli alberi semplici e \textit{RB}, e gli alberi \textit{AVL} la differenza è dell'ordine dei microsecondi.
 
 \subsection{Caso sorted}
 Si è proceduto inoltre ad analizzare i tempi medi di esecuzione nelle tre strutture dati anche nel caso di input che rappresenti il caso pessimo possibile: in questo caso, lo scenario peggiore per le funzioni di inserimento è quello di input ordinati in ordine crescente (ma sarebbe stato equivalente considerare l'ordine decrescente).
@@ -378,7 +383,7 @@ Come ci si aspettava, la struttura dati che ha registrato tempi di esecuzione de
 Gli alberi di tipo \textit{Red-Black} ottengono pressapoco lo stesso risultato del caso di input randomici, mentre gli alberi di tipo \textit{AVL} risultano la struttura dati che questo caso ottiene risultati migliori, ma comunque poco distanti dai \textit{Red-Black}.
 
 \subsection{Conclusioni}
-In conclusione, si ritiene che la struttura dati che globalmente è maggiormente indicata per la memorizzazione di alberi binari di ricerca, indipendentemente dalla struttura degli input, siano proprio gli alberi di tipo \textit{Red-Black}.
+In conclusione, si ritiene che la struttura dati che globalmente è maggiormente indicata per la memorizzazione di alberi binari di ricerca, senza porre limitazioni alla struttura degli input, siano proprio gli alberi di tipo \textit{Red-Black}.
 
 
 \end{document}

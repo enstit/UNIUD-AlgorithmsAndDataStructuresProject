@@ -126,7 +126,7 @@ while (start == end):
 r = end - start
 t_min = r*((1/TIME_ERROR)+1)
 
-#print(t_min)
+print(t_min)
 
 ##############################
 
