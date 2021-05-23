@@ -131,7 +131,7 @@ def main():
 	#	print(dim[i], tBST[i], np.std(tBST), tAVL[i], np.std(tAVL), tRBT[i], np.std(tRBT), sep=',')
 
 	for i in range(RANGE):
-		print str(dim[i]) + ',' + str(tBST[i]) + ',' + str(stdBST) + ',' + str(tAVL[i]) + ',' + str(stdAVL) + ',' + str(tRBT[i]) + ',' + str(stdRBT)
+		print str(dim[i]), str(tBST[i]), str(stdBST), str(tAVL[i]), str(stdAVL), str(tRBT[i]), str(stdRBT)
 
 if __name__ == '__main__':
 	main()
