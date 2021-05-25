@@ -15,26 +15,26 @@ def sizeGenerator(first_size, last_size, span):
     return sizes
 
 def runBST(n, MAX_KEY):
-    node = Node(random.randint(0, MAX_KEY), "")
+    node = Node(random.randint(0, MAX_KEY), " ")
     for i in range(0, n):
         key = random.randint(0, MAX_KEY)
         if bst_find(node, key) == None:
-            bst_insert(node, key, "")
+            bst_insert(node, key, " ")
 
 def runAVL(n, MAX_KEY):
-    node = AVLNode(random.randint(0, MAX_KEY), "")
+    node = AVLNode(random.randint(0, MAX_KEY), " ")
     for i in range(0, n):
         key = random.randint(0, MAX_KEY)
         if avl_find(node, key) == None:
-            avl_insert(node, key, "")
+            avl_insert(node, key, " ")
 
 def runRBT(n, MAX_KEY):
     node = RedBlackTree()
-    node.rbt_insert(random.randint(0, MAX_KEY), "")
+    node.rbt_insert(random.randint(0, MAX_KEY), " ")
     for i in range(0, n):
         key = random.randint(0, MAX_KEY)
         if rbt_find(node.root, key) == None:
-            node.rbt_insert(key, "")
+            node.rbt_insert(key, " ")
 
 def timingsBST(dim, t_min, MAX_KEY):
 	timings = []
@@ -78,6 +78,25 @@ def timingsRBT(dim, t_min, MAX_KEY):
 	    timings.append((t_passed/i)/n)
 	return timings
 
+def mean(data):
+    """Return the sample arithmetic mean of data."""
+    n = len(data)
+    return sum(data)/float(n)
+
+def _ss(data):
+    """Return sum of square deviations of sequence data."""
+    c = mean(data)
+    ss = sum((x-c)**2 for x in data)
+    return ss
+
+def stddev(data, ddof=0):
+    """Calculates the population standard deviation
+    by default; specify ddof=1 to compute the sample
+    standard deviation."""
+    n = len(data)
+    ss = _ss(data)
+    pvar = ss/(n-ddof)
+    return pvar**0.5
 
 
 def main():
@@ -107,12 +126,9 @@ def main():
 	tAVL = timingsAVL(dim, t_min, MAX_KEY)
 	tRBT = timingsRBT(dim, t_min, MAX_KEY)
 
-	stdBST = np.std(tBST)
-	stdAVL = np.std(tAVL)
-	stdRBT = np.std(tRBT)
-
-	#for i in range(RANGE):
-	#	print(dim[i], tBST[i], np.std(tBST), tAVL[i], np.std(tAVL), tRBT[i], np.std(tRBT), sep=',')
+	stdBST = stddev(tBST)
+	stdAVL = stddev(tAVL)
+	stdRBT = stddev(tRBT)
 
 	for i in range(RANGE):
 		print str(dim[i]), str(tBST[i]), str(stdBST), str(tAVL[i]), str(stdAVL), str(tRBT[i]), str(stdRBT)
