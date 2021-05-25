@@ -19,7 +19,7 @@ out:    two
 in:     exit
 """
 
-TREE_TYPE = "RBT"  # "BST" | "AVL" | "RBT"
+TREE_TYPE = "AVL"  # "BST" | "AVL" | "RBT"
 if(TREE_TYPE == "RBT"):
     t = RedBlackTree()
 else:
@@ -40,11 +40,11 @@ while(in_value[0] != "exit"):
 
     if(in_value[0] == "find"):
         if(TREE_TYPE == "BST"):
-            bst_find(t, int(in_value[1]))
+            print(bst_find(t, int(in_value[1])))
         elif(TREE_TYPE == "AVL"):
-            avl_find(t, int(in_value[1]))
+            print(avl_find(t, int(in_value[1])))
         elif (TREE_TYPE == "RBT"):
-            rbt_find(t.root, int(in_value[1]))
+            print(rbt_find(t.root, int(in_value[1])))
 
     if(in_value[0] == "show"):
         if(TREE_TYPE == "BST"):

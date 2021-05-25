@@ -10,6 +10,7 @@ insert a key value in a tree
     the literal format of the value
 :return: an AVLNode object
 """
+
 def avl_insert(root, value, str_name):
     if root is None:
         return AVLNode(value, str_name)
@@ -17,6 +18,7 @@ def avl_insert(root, value, str_name):
         root.left = avl_insert(root.left, value, str_name)
     else:
         root.right = avl_insert(root.right, value, str_name)
+
     root.height=1+max(getHeight(root.left),getHeight(root.right))
     balance = getBalance(root)
     # LL
@@ -53,6 +55,14 @@ def avl_show(root):
     else:
         print("NULL", end=" ")
 
+# def avl_show_pyhton2(root):
+#     if root:
+#         print str(root.key) + ":" + root.name + ":" + str(root.height),
+#         avl_show(root.left)
+#         avl_show(root.right)
+#     else:
+#         print "NULL"
+
 
 """
 print the found value in a literal format
@@ -60,7 +70,20 @@ print the found value in a literal format
     the root of the tree
 :param value: an integer representing the value to find
 """
+
 def avl_find(root, value):
+    x = root
+    while x is not None:
+        if x.key == value:
+            return x.name
+        if x.key < value:
+            x = x.right
+        else:
+            x = x.left
+    return
+
+
+def avl_find_recursive(root, value):
     if root is None:
         return
     if root.key == value:

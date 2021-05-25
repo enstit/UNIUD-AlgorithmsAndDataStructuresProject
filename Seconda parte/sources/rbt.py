@@ -123,13 +123,41 @@ def rbt_show(root):
         print("NULL", end=" ")
 
 
+# def rbt_show_python2(root):
+#     if root.key is None:
+#         print "NULL",
+#         return
+#     if root.name is None:
+#         print "NULL", 
+#         return
+#     if root:
+#         print str(root.key) + ":" + root.name + ":" + str(root.color) 
+#         rbt_show(root.left)
+#         rbt_show(root.right)
+#     else:
+#         print "NULL"
+
 """
-print the found value in a literal format
+reutrn the found value in a literal format
 :param root: RBTNode object that represents
     the root of the tree (accessed by t.root in the calling)
 :param value: an integer representing the value to find
 """
+
 def rbt_find(root, value):
+    curr = root
+
+    while (curr is not None) and (curr.key is not None) and (curr.name is not None):
+        if curr.key == value:
+            return curr.name
+        if curr.key < value:
+            curr = curr.right
+        else:
+            curr = curr.left
+    return
+
+
+def rbt_find_recursive(root, value):
     if root.key is None:
         return
     if root.name is None:

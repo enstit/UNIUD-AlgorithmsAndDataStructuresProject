@@ -9,7 +9,42 @@ insert a key value in a tree
     the literal format of the value
 :return: a BSTNode object
 """
-def bst_insert(root, value, str_name):
+
+
+def bst_insert(root, key, str_name):
+ 
+    curr = root
+ 
+    # pointer to store the parent of the current node
+    parent = None
+ 
+    # if the tree is empty, create a new node and set it as root
+    if root is None:
+        return Node(key, str_name)
+ 
+    # traverse the tree and find the parent node of the given key
+    while curr:
+ 
+        # update the parent to the current node
+        parent = curr
+ 
+        # if the given key is less than the current node,
+        # go to the left subtree; otherwise, go to the right subtree.
+        if key < curr.key:
+            curr = curr.left
+        else:
+            curr = curr.right
+ 
+    # construct a node and assign it to the appropriate parent pointer
+    if key < parent.key:
+        parent.left = Node(key, str_name)
+    else:
+        parent.right = Node(key, str_name)
+ 
+    return root
+
+
+def bst_insert_recursive(root, value, str_name):
     if root is None:
         return Node(value, str_name)
     if value < root.key:
@@ -18,32 +53,6 @@ def bst_insert(root, value, str_name):
         root.right = bst_insert(root.right, value, str_name)
     return root
 
-"""
-insert a key value in a tree
-:param root: BSTNode object that represents
-    the root of the tree
-:param value: an integer representing the value to insert
-:param str_name: a string corresponding to
-    the literal format of the value
-:return: a BSTNode object
-"""
-def bst_insert_iterative(root, value, str_name):
-    newnode = Node(value, str_name)
-    x = root
-    y = None
-    while (x != None):
-        y = x
-        if (value < x.key):
-            x = x.left
-        else:
-            x = x.right
-    if (y == None):
-        y = newnode
-    elif (value < y.key):
-        y.left = newnode
-    else:
-        y.right = newnode
-    return y
 
 """
 print the found value in a literal format
@@ -51,22 +60,9 @@ print the found value in a literal format
     the root of the tree
 :param value: an integer representing the value to find
 """
+
+
 def bst_find(root, value):
-    if root is None:
-        return
-    if root.key == value:
-        return root.name
-    if root.key < value:
-        return bst_find(root.right, value)
-    return bst_find(root.left, value)
-
-"""
-print the found value in a literal format
-:param root: BSTNode object that represents
-    the root of the tree
-:param value: an integer representing the value to find
-"""
-def bst_find_iterative(root, value):
     x = root
     while x is not None:
         if x.key == value:
@@ -76,6 +72,17 @@ def bst_find_iterative(root, value):
         else:
             x = x.left
     return
+
+
+def bst_find_recursive(root, value):
+    if root is None:
+        return
+    if root.key == value:
+        return root.name
+    if root.key < value:
+        return bst_find(root.right, value)
+    return bst_find(root.left, value)
+
 
     """
     print the tree in a preorder visit
@@ -93,6 +100,18 @@ def bst_show(root):
         bst_show(root.right)
     else:
         print("NULL", end=" ")
+
+# def bst_show_python2(root):
+#     """
+#     print the tree in a preorder visit
+#     :param root: BSTNode object that represent the root of the tree
+#     """
+#     if root:
+#         print str(root.key) + ":" + root.name
+#         show(root.left)
+#         show(root.right)
+#     else:
+#         print "NULL"
 
 
 def inorder_visit(root):
