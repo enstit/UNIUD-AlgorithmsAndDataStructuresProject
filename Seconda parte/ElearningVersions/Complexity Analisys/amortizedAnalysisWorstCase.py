@@ -4,7 +4,10 @@ from rbt import *
 import numpy as np
 import random
 import time as t
+import sys
 
+
+sys.setrecursionlimit(10**6)
 
 def sizeGenerator(first_size, last_size, span):
     sizes = []
@@ -14,82 +17,68 @@ def sizeGenerator(first_size, last_size, span):
         sizes.append(int(a*(b**i)))
     return sizes
 
-# Generate a keys list, of lenght n
-def _generateKeys(n, MAX_KEY):
-    a = []
-    for i in range(n):
-        a.append(random.randint(0, MAX_KEY))
-    return a
-
-# Generate list of lists to be used with runAVL/BST/RBTsmart()
-def generateInput(dim, MAX_KEY):
-    a = []
-    for i in dim:
-        a.append(_generateKeys(i, MAX_KEY))
-    return a
-
-def runBST(n, MAX_KEY): # n -> list of keys to generate bst
-    node = Node(random.randint(0, MAX_KEY), "")
-    for i in n:
+def runBST(n): # int n -> size of the tree
+    node = Node(0, "")
+    for i in range(1, n):
         key = i
-        if bst_find(node, key) == None:
-            bst_insert(node, key, "")
+        if bst_find(node, key) is None:
+        bst_insert_iterative(node, key, "")
 
-def runAVL(n, MAX_KEY): # n -> list of keys to generate avl tree
-    node = AVLNode(random.randint(0, MAX_KEY), "")
-    for i in n:
+def runAVL(n): # int n -> size of the tree
+    node = AVLNode(0, "")
+    for i in range(1, n):
         key = i
         if avl_find(node, key) == None:
-            avl_insert(node, key, "")
+        avl_insert(node, key, "")
 
-def runRBT(n, MAX_KEY): # n -> list of keys to generate rbt
+def runRBT(n): # int n -> size of the tree
     node = RedBlackTree()
-    node.rbt_insert(random.randint(0, MAX_KEY), "")
-    for i in n:
+    node.rbt_insert(0, "")
+    for i in range(1, n):
         key = i
         if rbt_find(node.root, key) == None:
-            node.rbt_insert(key, "")
+        node.rbt_insert(key, "")
 
-def timingsBST(generated_nodes, t_min, MAX_KEY):
+def timingsBST(dim, t_min):
 	timings = []
-	for n in generated_nodes:
+	for n in dim:
 	    i = 0
 	    t_passed = 0
 	    while ( t_passed <= t_min ):
 	        start = t.time()
-	        runBST(n, MAX_KEY)
+	        runBST(n)
 	        end = t.time()
 	        i += 1
 	        t_passed += end-start
-	    timings.append((t_passed/i)/len(n))
+	    timings.append((t_passed/i)/n)
 	return timings
 
-def timingsAVL(generated_nodes, t_min, MAX_KEY):
+def timingsAVL(dim, t_min):
 	timings = []
-	for n in generated_nodes:
+	for n in dim:
 	    i = 0
 	    t_passed = 0
 	    while ( t_passed <= t_min ):
 	        start = t.time()
-	        runAVL(n, MAX_KEY)
+	        runAVL(n)
 	        end = t.time()
 	        i += 1
 	        t_passed += end-start
-	    timings.append((t_passed/i)/len(n))
+	    timings.append((t_passed/i)/n)
 	return timings
 
-def timingsRBT(generated_nodes, t_min, MAX_KEY):
+def timingsRBT(dim, t_min):
 	timings = []
-	for n in generated_nodes:
+	for n in dim:
 	    i = 0
 	    t_passed = 0
 	    while ( t_passed <= t_min ):
 	        start = t.time()
-	        runRBT(n, MAX_KEY)
+	        runRBT(n)
 	        end = t.time()
 	        i += 1
 	        t_passed += end-start
-	    timings.append((t_passed/i)/len(n))
+	    timings.append((t_passed/i)/n)
 	return timings
 
 
@@ -100,11 +89,9 @@ def main():
 	FIRST_SIZE = 1000
 	LAST_SIZE = 10000
 	RANGE = 100
-	MAX_KEY = 2147483647
 
 	# Generate input array
 	dim = sizeGenerator(FIRST_SIZE,LAST_SIZE,RANGE)
-	generated_nodes = generateInput(dim, MAX_KEY)
 
 	# System time resolution
 	TIME_ERROR = 0.001
@@ -118,10 +105,9 @@ def main():
 	r = end - start
 	t_min = r*((1/TIME_ERROR)+1)
 
-
-	tBST = timingsBST(generated_nodes, t_min, MAX_KEY)
-	tAVL = timingsAVL(generated_nodes, t_min, MAX_KEY)
-	tRBT = timingsRBT(generated_nodes, t_min, MAX_KEY)
+	tBST = timingsBST(dim, t_min)
+	tAVL = timingsAVL(dim, t_min)
+	tRBT = timingsRBT(dim, t_min)
 
 	stdBST = np.std(tBST)
 	stdAVL = np.std(tAVL)
@@ -135,3 +121,27 @@ def main():
 
 if __name__ == '__main__':
 	main()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
