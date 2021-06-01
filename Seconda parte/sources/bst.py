@@ -15,27 +15,20 @@ def bst_insert(root, key, str_name):
  
     curr = root
  
-    # pointer to store the parent of the current node
     parent = None
  
-    # if the tree is empty, create a new node and set it as root
     if root is None:
         return Node(key, str_name)
  
-    # traverse the tree and find the parent node of the given key
     while curr:
  
-        # update the parent to the current node
         parent = curr
  
-        # if the given key is less than the current node,
-        # go to the left subtree; otherwise, go to the right subtree.
         if key < curr.key:
             curr = curr.left
         else:
             curr = curr.right
  
-    # construct a node and assign it to the appropriate parent pointer
     if key < parent.key:
         parent.left = Node(key, str_name)
     else:
